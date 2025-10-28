@@ -293,6 +293,7 @@ GameObject:
   - component: {fileID: 513962156}
   - component: {fileID: 513962155}
   - component: {fileID: 513962154}
+  - component: {fileID: 513962157}
   m_Layer: 5
   m_Name: StartPanel
   m_TagString: Untagged
@@ -383,6 +384,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 513962152}
   m_CullTransparentMesh: 1
+--- !u!114 &513962157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 513962152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 822593fecfe2c0e51b04eca032e9e80f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CoghillClan.PanelManager.Panel
+  panelName: 
 --- !u!1 &514227917
 GameObject:
   m_ObjectHideFlags: 0
@@ -395,6 +409,7 @@ GameObject:
   - component: {fileID: 514227921}
   - component: {fileID: 514227920}
   - component: {fileID: 514227919}
+  - component: {fileID: 514227922}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -485,6 +500,21 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &514227922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 514227917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2690879ff7fb7094bb99315d0dd1c55d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CoghillClan.PanelManager.PanelManager
+  initialPanel: {fileID: 513962157}
+  managedPanels: []
+  panelStack: []
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -747,8 +777,9 @@ GameObject:
   m_Component:
   - component: {fileID: 670545378}
   - component: {fileID: 670545377}
+  - component: {fileID: 670545379}
   m_Layer: 5
-  m_Name: PanelManager
+  m_Name: UIManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -793,6 +824,18 @@ Transform:
   - {fileID: 514227918}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &670545379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 670545376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbbe5cc67967bc2a1b0cb8fff760af77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIManager
 --- !u!1 &1032800103
 GameObject:
   m_ObjectHideFlags: 0
