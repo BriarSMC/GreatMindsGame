@@ -4,7 +4,7 @@ using System.Reflection;
 using System;
 
 [AddComponentMenu("Enable ActiveSceneSynchronization")]
-
+[HelpURL("http://localhost/mediawiki/index.php?title=Player.cs")]
 public class Player : NetworkBehaviour
 {
 
