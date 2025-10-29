@@ -61,10 +61,15 @@ public partial class GameManager : NetworkBehaviour
 #endif
   }
 
-  public void Panic(int code)
+  public void Panic(PanicCode code)
   {
-    PanicCode = code;
+    panicCode = code;
     SceneManager.LoadScene(k_PanicSceneName);
+  }
+
+  public int GetPanicCodeInt()
+  {
+    return (int)panicCode;
   }
 
 }

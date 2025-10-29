@@ -45,7 +45,7 @@ namespace CoghillClan.PanelManager
         /** 
          * Unity Methods
          **/
-        void Awake()
+        void OnEnable()
         {
             /**
              * Store our GameObject

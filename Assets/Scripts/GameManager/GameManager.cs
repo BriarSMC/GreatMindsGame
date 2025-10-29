@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEditor;
 using Unity.Netcode;
 using UnityEngine.SceneManagement;
+using CoghillClan.PanelManager;
 
 /**
  *
@@ -36,16 +37,17 @@ public partial class GameManager : NetworkBehaviour
 
     // References to game objects
     public Player Player;
-    private NetworkManager networkManager;
+    public NetworkManager networkManager;
+    public PanelManager panelManager;
 
     // Public Properties
     public ulong ClientId;
     public string ConnectionType;
     public string OurIPAddress;
     public string OurHostNumber;
-    public int PanicCode;
 
     // Private Properties
+    private PanicCode panicCode;
 
     // Constants
 

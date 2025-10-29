@@ -36,18 +36,35 @@ namespace CoghillClan.PanelManager
         public List<Panel> panelStack = new List<Panel>();
 
         /**
-         * Unity Methods
+         * Public Methods
          **/
 
-        void Start()
+        public void ManagerEnable(bool enable)
         {
             /**
-             * Die if no managed panels exist.
-             * If initialPanel isn't set, then just use the first one in the managed panels.
-             * Disable all panels.
-             * Push the initial panel onto the stack.
+             * If the application uses a persistent game manager, then it's likely,
+             * when a new scene is loaded, that the panel information is stale and we need
+             * to reload the panels and reset the PanelManager.
+             * When true, just turn on the last panel on the stack.
+             * Otherwise, turn off all of the panels in the stack.
              **/
+            if (managedPanels.Count == 0) LoadPanels();
+            if (enable) TurnOnPanel(panelStack[panelStack.Count - 1]);
+            else
+                TurnOffAllPanels();
+        }
 
+        public void LoadPanels()
+        {
+            // If you have multiple scenes that use a persistent game manager that controls the PanelManager,
+            // then you have to call LoadPanels() to get the new scene's panels.
+
+            /**
+            * Die if no managed panels exist.
+            * If initialPanel isn't set, then just use the first one in the managed panels.
+            * Disable all panels.
+            * Push the initial panel onto the stack.
+            **/
             FindPanels();
             // TODO: Need to throw an exception if managedPanels contains duplicate names.
 
@@ -57,23 +74,6 @@ namespace CoghillClan.PanelManager
             ManagerEnable(false);
         }
 
-
-
-        /**
-         * Public Methods
-         **/
-
-        public void ManagerEnable(bool enable)
-        {
-            /**
-             * When true, just turn on the last panel on the stack.
-             * Otherwise, turn off all of the panels in the stack.
-             **/
-
-            if (enable) TurnOnPanel(panelStack[panelStack.Count - 1]);
-            else
-                TurnOffAllPanels();
-        }
         //TODO Consider making the next 3 methods "private"
         public void TurnOffAllPanels() { foreach (Panel panel in managedPanels) { panel.gameObject.SetActive(false); } }
         public void TurnOffPanel(Panel panel) { panel.gameObject.SetActive(false); }
@@ -198,6 +198,7 @@ namespace CoghillClan.PanelManager
 
         private void FindPanels()
         {
+            Debug.Log($"{this.name}:{MethodBase.GetCurrentMethod().Name}> ");
             /**
              * Find all the children panels and load them into managedPanels
              **/

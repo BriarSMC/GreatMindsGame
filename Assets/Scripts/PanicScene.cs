@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using System;
+using CoghillClan.PanelManager;
 
 /**
  *
@@ -24,13 +25,29 @@ using System;
 
 public class PanicScene : MonoBehaviour
 {
+    /*
+     * At Start get the GameManager object so we can get the PanicCode from it, and
+     * connect the Quit our quit method.
+     * Display the panic message on the screen.
+     * Wait for the Quit Click.
+     */
+
     GameManager gameManager;
+    TMP_Text tmpText;
     Button quitBtn;
 
     void Start()
     {
         gameManager = FindFirstObjectByType<GameManager>();
-        quitBtn.GetComponent<Button>().onClick.AddListener(PanicQuit);
+        if (gameManager == null) throw new NullReferenceException("PanicScene:Start() -> Cannot find GameManager");
+        // gameManager.panelManager.LoadPanels();
+        gameManager.panelManager.ManagerEnable(true);
+
+        tmpText = GameObject.Find("MessageText").GetComponent<TMP_Text>();
+        quitBtn = GameObject.Find("QuitBtn").GetComponent<Button>();
+        quitBtn.GetComponentInChildren<Button>().onClick.AddListener(PanicQuit);
+
+        DisplayPanicMessage();
     }
 
     private void PanicQuit()
@@ -42,5 +59,10 @@ public class PanicScene : MonoBehaviour
          */
 
         gameManager.QuitGame();
+    }
+
+    private void DisplayPanicMessage()
+    {
+        tmpText.text = GameManager.PanicMessageText[gameManager.GetPanicCodeInt()];
     }
 }
