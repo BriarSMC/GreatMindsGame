@@ -7,6 +7,8 @@ using UnityEditor;
 using Unity.Netcode;
 using UnityEngine.SceneManagement;
 using CoghillClan.PanelManager;
+using System.ComponentModel;
+using System.Collections.Generic;
 
 /**
  *
@@ -46,6 +48,18 @@ public partial class GameManager : NetworkBehaviour
     public string OurIPAddress;
     public string OurHostNumber;
 
+    public static readonly Dictionary<Panels, string> PanelNames =
+        new Dictionary<Panels, string>
+        {
+            { Panels.splashPanel, "SplashPanel"},
+            { Panels.namePanel, "NamePanel"},
+            { Panels.networkPanel, "NetworkPanel"},
+            { Panels.playPanel, "PlayPanel"},
+            { Panels.resultsPanel, "ResultsPanel"},
+            { Panels.messagePanel, "MessagePanel"},
+        };
+
+
     // Private Properties
     private PanicCode panicCode;
 
@@ -54,6 +68,16 @@ public partial class GameManager : NetworkBehaviour
     const string k_PanicSceneName = "PanicScene";
 
     // Enums
+
+    public enum Panels
+    {
+        splashPanel,
+        namePanel,
+        networkPanel,
+        playPanel,
+        resultsPanel,
+        messagePanel,
+    }
 
     /*
      * This is a partial class. This file has the name of the class, so we use 
@@ -64,6 +88,7 @@ public partial class GameManager : NetworkBehaviour
      *   GameManagerStartup.cs          - All the Unity object initialization methods
      *   GameManagerPublicMethods.cs    - All of our Public methods
      *   GameManagerRpcMethods.cs       - All of our RPC methods
+     *   GameManagerPanic.cs            - Panic-Catastrophic error display
      */
 
 

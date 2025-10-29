@@ -2,10 +2,12 @@ using System;
 using System.Reflection;
 using System.Linq;
 using System.Net;
+using System.ComponentModel;
 using UnityEngine;
 using UnityEditor;
 using Unity.Netcode;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
 
 /**
  *
@@ -71,6 +73,16 @@ public partial class GameManager : NetworkBehaviour
   {
     return (int)panicCode;
   }
+
+  // public string GetEnumDescription(this Enum value)
+  // {
+  //   FieldInfo field = value.GetType().GetField(value.ToString());
+  //   if (field == null) return value.ToString(); // Fallback to enum name
+
+  //   DescriptionAttribute[] attributes = (DescriptionAttribute[])field.GetCustomAttributes(typeof(DescriptionAttribute), false);
+  //   return attributes.Length > 0 ? attributes[0].Description : value.ToString();
+
+  // }
 
 }
 
