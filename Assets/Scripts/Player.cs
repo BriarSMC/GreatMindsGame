@@ -2,6 +2,7 @@ using Unity.Netcode;
 using UnityEngine;
 using System.Reflection;
 using System;
+using System.Text.RegularExpressions;
 
 /**
  *
@@ -25,12 +26,24 @@ using System;
 [HelpURL("https://github.com/BriarSMC/GreatMindsGame/wiki/Player.cs-HelpURL-Page")]
 public class Player : NetworkBehaviour
 {
+    private string _playerName = "Anonymous";
+    public string PlayerName { get; private set; }
+
+    private ulong _clientId;
+    public ulong ClientId { get { return _clientId; } }
 
     private GameManager gameManager;
+
     void Awake()
     {
         gameManager = FindFirstObjectByType<GameManager>();
         if (gameManager == null) throw new Exception("Could not find GameManager object.");
+        NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnectedCallback;
+    }
+
+    private void OnClientConnectedCallback(ulong obj)
+    {
+        _clientId = obj;
     }
 
     public override void OnNetworkSpawn()
@@ -38,4 +51,20 @@ public class Player : NetworkBehaviour
         gameManager.Player = this;
     }
 
+    public void SetPlayerName(string playerName)
+    {
+        /*
+         * Null or blank names are not allowed.
+         * Strip any non-printable characters from the string.
+         */
+
+        if (String.IsNullOrEmpty(playerName)) return;
+
+        _playerName = Regex.Replace(playerName, @"\p{C}", string.Empty);
+    }
+
+    public void SetClientId(ulong clientId)
+    {
+        _clientId = clientId;
+    }
 }
