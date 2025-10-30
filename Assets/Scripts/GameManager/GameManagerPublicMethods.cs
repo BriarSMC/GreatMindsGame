@@ -75,5 +75,15 @@ public partial class GameManager : NetworkBehaviour
     return (int)panicCode;
   }
 
+  public void SetWeAreHost()
+  {
+    WeAreHost = true;
+    ClientType = (int)ClientTypes.host;
+  }
 
+  public void SetWeArePlayer()
+  {
+    WeArePlayer = true;
+    ClientType = (int)ClientTypes.player;
+  }
 }

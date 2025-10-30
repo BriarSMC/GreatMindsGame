@@ -26,8 +26,8 @@ using System.Text.RegularExpressions;
 [HelpURL("https://github.com/BriarSMC/GreatMindsGame/wiki/Player.cs-HelpURL-Page")]
 public class Player : NetworkBehaviour
 {
-    private string _playerName = "Anonymous";
-    public string PlayerName { get; private set; }
+    private string _playerName = "Name Not Set";
+    public string PlayerName { get { return _playerName; } set { _playerName = SetPlayerName(value); } }
 
     private ulong _clientId;
     public ulong ClientId { get { return _clientId; } }
@@ -51,16 +51,15 @@ public class Player : NetworkBehaviour
         gameManager.Player = this;
     }
 
-    public void SetPlayerName(string playerName)
+    private string SetPlayerName(string value)
     {
         /*
          * Null or blank names are not allowed.
          * Strip any non-printable characters from the string.
          */
+        if (String.IsNullOrEmpty(value)) return _playerName;
 
-        if (String.IsNullOrEmpty(playerName)) return;
-
-        _playerName = Regex.Replace(playerName, @"\p{C}", string.Empty);
+        return Regex.Replace(value, @"\p{C}", string.Empty);
     }
 
     public void SetClientId(ulong clientId)

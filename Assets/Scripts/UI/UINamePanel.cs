@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine.UI;
 using System;
 using System.Text.RegularExpressions;
+using System.Reflection;
 public class UINamePanel : MonoBehaviour
 {
     GameManager gameManager;
@@ -17,6 +18,7 @@ public class UINamePanel : MonoBehaviour
 
     Regex invalidChars = new Regex(@"^[a-zA-Z0-9\-]+$");
 
+
     const string k_ErrorNameIsBlank = "Name is missing.";
     const string k_ErrorInvalidCharacters = "Letters, numbers, hyphens only.";
 
@@ -25,6 +27,7 @@ public class UINamePanel : MonoBehaviour
         gameManager = GameManager.Instance;
         panelManager = FindFirstObjectByType<PanelManager>();
         nameInput = transform.Find("NameInputField").GetComponent<TMP_InputField>();
+        nameInput.ActivateInputField();
         acceptBtn = transform.Find("AcceptBtn").GetComponent<Button>();
         acceptBtn.onClick.AddListener(OnAcceptClicked);
         errorMessagePanel = transform.Find("ErrorMessagePanel").GetComponent<RectTransform>();
@@ -33,7 +36,6 @@ public class UINamePanel : MonoBehaviour
         errorMessageText = errorMessagePanel.Find("ErrorMessageText").GetComponent<TextMeshProUGUI>();
         quitBtn = transform.Find("QuitBtn").GetComponent<Button>();
         quitBtn.onClick.AddListener(gameManager.QuitGame);
-
     }
 
     private void OnAcceptClicked()
@@ -53,11 +55,19 @@ public class UINamePanel : MonoBehaviour
         }
 
         errorMessageGroup.alpha = 0f;
+        gameManager.Player.PlayerName = name;
+        DisplayNextPanel();
     }
 
     private void DisplayError(string msg)
     {
         errorMessageGroup.alpha = 1f;
         errorMessageText.text = msg;
+    }
+
+    private void DisplayNextPanel()
+    {
+        Debug.Log($"{this.name}:{MethodBase.GetCurrentMethod().Name}> Next Panel: {GameManager.PanelNames[GameManager.Panels.networkPanel]}");
+        panelManager.Push(GameManager.PanelNames[GameManager.Panels.networkPanel]);
     }
 }

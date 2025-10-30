@@ -47,6 +47,9 @@ public partial class GameManager : NetworkBehaviour
     public string ConnectionType;
     public string OurIPAddress;
     public string OurHostNumber;
+    public bool WeAreHost = false;
+    public bool WeArePlayer = false;
+    public int ClientType = 0;
 
     public static readonly Dictionary<Panels, string> PanelNames =
         new Dictionary<Panels, string>
@@ -78,6 +81,11 @@ public partial class GameManager : NetworkBehaviour
         resultsPanel,
         messagePanel,
     }
+
+    public enum ClientTypes { host = 1, player = 2 }
+
+    //DELETEME TEMPORARY CRAP FOR TESTING AND SIMULATION FOLLOWS
+    [SerializeReference] Player prefab;
 
     /*
      * This is a partial class. This file has the name of the class, so we use 
