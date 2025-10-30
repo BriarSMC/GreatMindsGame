@@ -68,7 +68,9 @@ public partial class GameManager : NetworkBehaviour
 
     // Constants
 
-    const string k_PanicSceneName = "PanicScene";
+    public const string k_PanicSceneName = "PanicScene";
+
+    public const string k_PanelManagerPath = "/UIManager/Canvas/PanelManager/";
 
     // Enums
 
