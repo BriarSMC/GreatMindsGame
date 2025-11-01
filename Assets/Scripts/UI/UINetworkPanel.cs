@@ -3,10 +3,10 @@ using CoghillClan.PanelManager;
 using UnityEngine.UI;
 using System;
 using System.Reflection;
-public class UINetworkPanel : MonoBehaviour
+public class UINetworkPanel : Panel
 {
     GameManager gameManager;
-    PanelManager panelManager;
+    // PanelManager panelManager;
     Button hostBtn;
     Button joinBtn;
 
@@ -15,7 +15,6 @@ public class UINetworkPanel : MonoBehaviour
     void Start()
     {
         gameManager = GameManager.Instance;
-        panelManager = FindFirstObjectByType<PanelManager>();
         hostBtn = GameObject.Find($"{k_ButtonsPath}HostBtn").GetComponent<Button>();
         hostBtn.onClick.AddListener(HostBtnClicked);
         joinBtn = GameObject.Find($"{k_ButtonsPath}JoinBtn").GetComponent<Button>();

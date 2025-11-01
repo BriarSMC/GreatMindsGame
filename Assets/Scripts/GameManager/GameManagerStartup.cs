@@ -69,6 +69,7 @@ public partial class GameManager : NetworkBehaviour
   //SIMULATE PLAYER BEING SPAWNED
   private void FakeSpawnPlayer()
   {
-    this.Player = Instantiate(prefab);
+    Debug.Log($"{this.name}:{MethodBase.GetCurrentMethod().Name}> FAKEPLAYERSPAWN");
+    Player = this.Player = Instantiate(prefab);
   }
 }

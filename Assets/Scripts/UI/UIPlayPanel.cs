@@ -2,11 +2,11 @@ using UnityEngine;
 using CoghillClan.PanelManager;
 using TMPro;
 using UnityEngine.UI;
-using System;
-public class UIPlayPanel : MonoBehaviour
+using System.Reflection;
+public class UIPlayPanel : Panel
 {
     GameManager gameManager;
-    PanelManager panelManager;
+    // PanelManager panelManager;
     TMP_Text headerText;
     TMP_Text playerNameText;
     TMP_InputField prefixInput;
@@ -16,20 +16,21 @@ public class UIPlayPanel : MonoBehaviour
     Button sendBtn;
     Button quitBtn;
 
+
+    bool IsPlayRunning = false;
+
     readonly string k_PlayAreaPath = $"{GameManager.k_PanelManagerPath}PlayPanel/PlayArea/";
     readonly string k_ButtonAreaPath = $"{GameManager.k_PanelManagerPath}PlayPanel/ButtonArea/";
 
-    void Start()
+    /* protected override  */
+    public override void OnPanelLoaded()
     {
         LoadUIReferences();
-        SetUIValues();
-
     }
 
     private void LoadUIReferences()
     {
         gameManager = GameManager.Instance;
-        panelManager = GameObject.Find("PanelManager").GetComponent<PanelManager>();
         headerText = transform.Find("HeaderText").GetComponent<TextMeshProUGUI>();
         playerNameText = transform.Find("PlayerNameText").GetComponent<TextMeshProUGUI>();
         prefixInput = transform.Find($"{k_PlayAreaPath}PrefixInput").GetComponent<TMP_InputField>();
@@ -40,8 +41,14 @@ public class UIPlayPanel : MonoBehaviour
         quitBtn = transform.Find("QuitBtn").GetComponent<Button>();
     }
 
-    private void SetUIValues()
+    public override void OnPanelEnabled()
     {
+        EventManager.Instance.PlayStarted += PlayStartedFired;
         playerNameText.text = gameManager.Player.PlayerName;
+    }
+
+    public void PlayStartedFired()
+    {
+
     }
 }
