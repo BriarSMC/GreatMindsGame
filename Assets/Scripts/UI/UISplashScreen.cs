@@ -24,15 +24,8 @@ using CoghillClan.PanelManager;
  * nn.nn.nn dd-mmm-yyyy Comment 
  * 0.1.0    29-Oct-2025 From scratch
  **/
-public class UISplashScreen : MonoBehaviour
+public class UISplashScreen : Panel
 {
-    PanelManager panelManager;
-
-    void Start()
-    {
-        panelManager = GameObject.Find("PanelManager").GetComponent<PanelManager>();
-    }
-
     public void LoadNewSceneTimelineSignal()
     {
         Debug.Log($"{this.name}:{MethodBase.GetCurrentMethod().Name}> Next Panel: {GameManager.PanelNames[GameManager.Panels.namePanel]}");

@@ -1,12 +1,9 @@
 using UnityEngine;
 using CoghillClan.PanelManager;
-public class UIMessagePanel : MonoBehaviour
+public class UIMessagePanel : Panel
 {
-    PanelManager panelManager;
+    // PanelManager panelManager;
 
-    void Start()
-    {
-        panelManager = GameObject.Find("PanelManager").GetComponent<PanelManager>();
-    }
+
 
 }

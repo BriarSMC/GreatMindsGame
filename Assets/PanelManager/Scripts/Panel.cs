@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Reflection;
+using CoghillClan.PanelManager;
 
 namespace CoghillClan.PanelManager
 {
@@ -16,10 +17,12 @@ namespace CoghillClan.PanelManager
     * 
     * https://www.github.com/BriarSMC/Panel/Manager
     *
-    * Version: 0.1.0
+    * Version: 0.1.2
     * Version History
     * ----------------------------------------------------------------------------
     * 0.1.0    13-Oct-2025 Pre-release initial version
+    * 0.1.1    30-Oct-2025 Turn this into a parent class 
+    * 0.1.2    01-Nov-2025 Set panelManager during Awake()
     **/
     public class Panel : MonoBehaviour
     {
@@ -28,6 +31,8 @@ namespace CoghillClan.PanelManager
         public GameObject PanelObject { get; private set; }
         public string PanelName { get; private set; }
         public int PanelIndex { get; private set; }
+
+        protected PanelManager panelManager;
 
         /**
         * Constructors
@@ -45,6 +50,11 @@ namespace CoghillClan.PanelManager
         /** 
          * Unity Methods
          **/
+        void Awake()
+        {
+            panelManager = FindFirstObjectByType<PanelManager>();
+        }
+
         void OnEnable()
         {
             /**
@@ -72,11 +82,53 @@ namespace CoghillClan.PanelManager
         /**
          * Public Methods
          **/
+
+        public void SetPanelManager(PanelManager panelManager)
+        {
+            Debug.Log($"{this.name}:{MethodBase.GetCurrentMethod().Name}> ");
+            if (panelManager != null) panelManager = panelManager;
+        }
+
         public void SetPanelName(string panelName)
         {
             // The PanelManager has to set this property through this method
             this.PanelName = string.IsNullOrEmpty(panelName)
                 || string.IsNullOrWhiteSpace(panelName) ? this.PanelName : panelName;
+        }
+
+        /**
+         * Virtual Methods
+         * 
+         * This methods are just stubs in the class. They are meant for the 
+         * child class to implement so the PanelManager can communicate with them
+         * if needed. 
+         **/
+
+        public virtual void OnPanelLoaded()
+        {
+            /*
+             * PanelManager will call this method when a panel is added to the
+             * managed panels list.
+             */
+            Debug.Log($"{this.name}:{MethodBase.GetCurrentMethod().Name}> Parent PanelLoaded()");
+        }
+
+        public virtual void OnPanelEnabled()
+        {
+            /*
+             * PanelManager will call this method when a panel is pushed onto
+             * the panel stack.
+             */
+            Debug.Log($"{this.name}:{MethodBase.GetCurrentMethod().Name}> Parent PanelPushed()");
+        }
+
+        public virtual void OnPanelDisabled()
+        {
+            /*
+             * PanelManager will call this method when a panel is popped
+             * from the panel stack.
+             */
+            Debug.Log($"{this.name}:{MethodBase.GetCurrentMethod().Name}> Parent PanelPopped()");
         }
     } // End of Class Panel
 } // End of Namespace CoghillClan.PanelManager

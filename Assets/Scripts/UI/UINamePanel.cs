@@ -5,10 +5,9 @@ using UnityEngine.UI;
 using System;
 using System.Text.RegularExpressions;
 using System.Reflection;
-public class UINamePanel : MonoBehaviour
+public class UINamePanel : Panel
 {
     GameManager gameManager;
-    PanelManager panelManager;
     TMP_InputField nameInput;
     Button acceptBtn;
     RectTransform errorMessagePanel;
@@ -25,7 +24,6 @@ public class UINamePanel : MonoBehaviour
     void Start()
     {
         gameManager = GameManager.Instance;
-        panelManager = FindFirstObjectByType<PanelManager>();
         nameInput = transform.Find("NameInputField").GetComponent<TMP_InputField>();
         nameInput.ActivateInputField();
         acceptBtn = transform.Find("AcceptBtn").GetComponent<Button>();

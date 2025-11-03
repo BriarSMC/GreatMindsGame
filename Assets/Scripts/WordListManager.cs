@@ -11,14 +11,13 @@ using System;
  **/
 
 /** 
- * https://games.coghillclan.net/
+ * https://games.coghillclan.net/GreatMinds
  * 
- * https://www.github.com/BriarSMC/
+ * https://www.github.com/BriarSMC/GreatMindsGame.git
  *
  * Version: 0.1.0
  * Version History
  * ----------------------------------------------------------------------------
- * nn.nn.nn dd-mmm-yyyy Comment 
  * 0.1.0    27-Oct-2025 Using the GreatMinds-Data-Test CS file as a base
  **/
 

@@ -23,7 +23,7 @@ using CoghillClan.PanelManager;
  * 0.1.0    28-Oct-2025 From scratch
  **/
 
-public class PanicScene : MonoBehaviour
+public class PanicScene : Panel
 {
     /*
      * At Start get the GameManager object so we can get the PanicCode from it, and

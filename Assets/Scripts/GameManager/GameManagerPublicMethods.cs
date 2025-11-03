@@ -39,7 +39,7 @@ public partial class GameManager : NetworkBehaviour
     IPHostEntry hostEntry = Dns.GetHostEntry(hostName);
     OurIPAddress = hostEntry.AddressList[0].ToString();
     Debug.Log($"Our IP Address: {OurIPAddress}");
-    OurHostNumber = OurIPAddress.Split('.').Last();
+    OurNodeNumber = OurIPAddress.Split('.').Last();
   }
 
   public void OnClientConnectedCallback(ulong clientId)
@@ -81,8 +81,9 @@ public partial class GameManager : NetworkBehaviour
     ClientType = (int)ClientTypes.host;
   }
 
-  public void SetWeArePlayer()
+  public void SetWeArePlayer(int hostNumber)
   {
+    ConnectToHostNumber = hostNumber.ToString();
     WeArePlayer = true;
     ClientType = (int)ClientTypes.player;
   }
