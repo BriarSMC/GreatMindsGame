@@ -1,5 +1,7 @@
 using UnityEngine;
 using CoghillClan.PanelManager;
+using TMPro;
+using UnityEngine.UI;
 
 /**
  *
@@ -21,12 +23,37 @@ using CoghillClan.PanelManager;
 
 public class UIHostPanel : Panel
 {
+    GameManager gameManager;
+    TextMeshProUGUI playerNamePrefab;
+
+    TextMeshProUGUI hostNumberText;
+    Button startGameBtn;
+    Button quitBtn;
+    RectTransform playerListPanel;
+
+
 
     public override void OnPanelLoaded()
     {
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        GameObject obj = Resources.Load<GameObject>("Prefabs/ConnectedPlayerText");
+        playerNamePrefab = Instantiate(obj).GetComponent<TextMeshProUGUI>();
+        hostNumberText = transform.Find("HostNumberText").GetComponent<TextMeshProUGUI>();
+        startGameBtn = transform.Find("StartGameBtn").GetComponent<Button>();
+        startGameBtn.onClick.AddListener(OnStartGameBtnClicked);
+        quitBtn = transform.Find("QuitBtn").GetComponent<Button>();
+        quitBtn.onClick.AddListener(gameManager.QuitGame);
+        playerListPanel = transform.Find("PlayerListPanel").GetComponent<RectTransform>();
     }
 
     public override void OnPanelEnabled()
     {
+        hostNumberText.text = $"Game #{gameManager.OurNodeNumber}";
+    }
+
+    private void OnStartGameBtnClicked()
+    {
+        playerNamePrefab.text = $"Player: {gameManager.Player.PlayerName}";
+        playerNamePrefab.transform.SetParent(playerListPanel, false);
     }
 }

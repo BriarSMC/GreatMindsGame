@@ -43,7 +43,7 @@ public class UIPlayPanel : Panel
 
     public override void OnPanelEnabled()
     {
-        EventManager.Instance.PlayStarted += PlayStartedFired;
+        EventManager.PlayStarted.AddListener(PlayStartedFired);
         playerNameText.text = gameManager.Player.PlayerName;
     }
 

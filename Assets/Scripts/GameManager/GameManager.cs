@@ -46,7 +46,8 @@ public partial class GameManager : NetworkBehaviour
     public ulong ClientId;
     public string ConnectionType;
     public string OurIPAddress;
-    public string OurHostNumber;
+    public string OurNodeNumber;
+    public string ConnectToHostNumber;
     public bool WeAreHost = false;
     public bool WeArePlayer = false;
     public int ClientType = 0;
@@ -57,6 +58,7 @@ public partial class GameManager : NetworkBehaviour
             { Panels.splashPanel, "SplashPanel"},
             { Panels.namePanel, "NamePanel"},
             { Panels.networkPanel, "NetworkPanel"},
+            {Panels.hostPanel, "HostPanel"},
             { Panels.playPanel, "PlayPanel"},
             { Panels.resultsPanel, "ResultsPanel"},
             { Panels.messagePanel, "MessagePanel"},
@@ -79,6 +81,7 @@ public partial class GameManager : NetworkBehaviour
         splashPanel,
         namePanel,
         networkPanel,
+        hostPanel,
         playPanel,
         resultsPanel,
         messagePanel,

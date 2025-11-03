@@ -8,7 +8,6 @@ using System.Reflection;
 public class UINamePanel : Panel
 {
     GameManager gameManager;
-    // PanelManager panelManager;
     TMP_InputField nameInput;
     Button acceptBtn;
     RectTransform errorMessagePanel;

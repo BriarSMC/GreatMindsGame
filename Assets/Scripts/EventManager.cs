@@ -27,7 +27,7 @@ class EventManager : MonoBehaviour
     public static EventManager Instance;
 
     // Events
-    public UnityAction PlayStarted;
+    public static UnityEvent PlayStarted = new UnityEvent();
 
     private void Awake()
     {
