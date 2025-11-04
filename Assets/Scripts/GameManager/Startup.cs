@@ -20,8 +20,6 @@ using UnityEngine.SceneManagement;
  * Version: 0.1.0
  * Version History
  * ----------------------------------------------------------------------------
-// DELETEME Delete the following line before first rc commit
- * nn.nn.nn dd-mmm-yyyy Comment 
  * 0.1.0    28-Oct-2025 Refactored Awake and Start out of GameManager.cs
  **/
 
@@ -54,6 +52,7 @@ public partial class GameManager : NetworkBehaviour
   void Start()
   {
     FakeSpawnPlayer();  //DELETEME TESTING PURPOSES ONLY
+    RegisterEvents();
     NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnectedCallback;
     GetOurIPAddress();
     panelManager.ManagerEnable(true);

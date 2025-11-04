@@ -22,8 +22,6 @@ using UnityEngine.SceneManagement;
  * Version: 0.1.0
  * Version History
  * ----------------------------------------------------------------------------
-// DELETEME Delete the following line before first rc commit
- * nn.nn.nn dd-mmm-yyyy Comment 
  * 0.1.0    28-Oct-2025 Refactored RPC methods out of GameManager.cs
  **/
 

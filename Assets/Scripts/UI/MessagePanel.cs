@@ -1,6 +1,6 @@
 using UnityEngine;
 using CoghillClan.PanelManager;
-public class UIMessagePanel : Panel
+public class MessagePanel : Panel
 {
     // PanelManager panelManager;
 

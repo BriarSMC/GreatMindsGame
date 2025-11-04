@@ -19,7 +19,6 @@ using CoghillClan.PanelManager;
  * Version: 0.1.0
  * Version History
  * ----------------------------------------------------------------------------
- * nn.nn.nn dd-mmm-yyyy Comment 
  * 0.1.0    28-Oct-2025 From scratch
  **/
 

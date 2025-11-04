@@ -2,8 +2,26 @@ using UnityEngine;
 using CoghillClan.PanelManager;
 using TMPro;
 using UnityEngine.UI;
-using System.Reflection;
-public class UIPlayPanel : Panel
+
+/**
+ *
+ * Copyright © 2025 by Steven M. Coghill
+ * This project is licensed under the MIT License.
+ * A copy of the MIT License can be found in the 
+ * accompanying LICENSE.txt file.
+ **/
+/** 
+ * https://games.coghillclan.net/GreatMinds
+ * 
+ * https://www.github.com/BriarSMC/GreatMindsGame.git
+ *
+ * Version: 0.0.0
+ * Version History
+ * ----------------------------------------------------------------------------
+ * 0.1.0    29-Oct-2025 From scratch
+ **/
+
+public class PlayPanel : Panel
 {
     GameManager gameManager;
     // PanelManager panelManager;

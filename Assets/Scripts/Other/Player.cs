@@ -12,17 +12,16 @@ using System.Text.RegularExpressions;
  * accompanying LICENSE.txt file.
  **/
 /** 
- * https://games.coghillclan.net/
+ * https://games.coghillclan.net/GreatMinds
  * 
- * https://www.github.com/BriarSMC/
+ * https://www.github.com/BriarSMC/GreatMindsGame.git
  *
  * Version: 0.1.0
  * Version History
  * ----------------------------------------------------------------------------
- * nn.nn.nn dd-mmm-yyyy Comment 
  * 0.1.0    27-Oct-2025 Create based on 
  **/
-[AddComponentMenu("Enable ActiveSceneSynchronization")]
+
 [HelpURL("https://github.com/BriarSMC/GreatMindsGame/wiki/Player.cs-HelpURL-Page")]
 public class Player : NetworkBehaviour
 {

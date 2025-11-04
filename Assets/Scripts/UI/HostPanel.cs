@@ -21,7 +21,7 @@ using UnityEngine.UI;
  * 0.1.0    01-Nov-2025 From scratch
  **/
 
-public class UIHostPanel : Panel
+public class HostPanel : Panel
 {
     GameManager gameManager;
     TextMeshProUGUI playerNamePrefab;
@@ -55,5 +55,6 @@ public class UIHostPanel : Panel
     {
         playerNamePrefab.text = $"Player: {gameManager.Player.PlayerName}";
         playerNamePrefab.transform.SetParent(playerListPanel, false);
+        EventManager.PlayStarted.Invoke();
     }
 }

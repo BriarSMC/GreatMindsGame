@@ -5,7 +5,25 @@ using UnityEngine.UI;
 using System;
 using System.Text.RegularExpressions;
 using System.Reflection;
-public class UINamePanel : Panel
+/**
+ *
+ * Copyright © 2025 by Steven M. Coghill
+ * This project is licensed under the MIT License.
+ * A copy of the MIT License can be found in the 
+ * accompanying LICENSE.txt file.
+ **/
+/** 
+ * https://games.coghillclan.net/GreatMinds
+ * 
+ * https://www.github.com/BriarSMC/GreatMindsGame.git
+ *
+ * Version: 0.0.0
+ * Version History
+ * ----------------------------------------------------------------------------
+ * 0.1.0    29-Oct-2025 From scratch
+ **/
+
+public class NamePanel : Panel
 {
     GameManager gameManager;
     TMP_InputField nameInput;
@@ -16,12 +34,12 @@ public class UINamePanel : Panel
     Button quitBtn;
 
     Regex invalidChars = new Regex(@"^[a-zA-Z0-9\-]+$");
-
+    bool inputFieldTookFocus = true;
 
     const string k_ErrorNameIsBlank = "Name is missing.";
     const string k_ErrorInvalidCharacters = "Letters, numbers, hyphens only.";
 
-    void Start()
+    public override void OnPanelLoaded()
     {
         gameManager = GameManager.Instance;
         nameInput = transform.Find("NameInputField").GetComponent<TMP_InputField>();
@@ -33,9 +51,24 @@ public class UINamePanel : Panel
         errorMessageGroup.alpha = 0f;
         errorMessageText = errorMessagePanel.Find("ErrorMessageText").GetComponent<TextMeshProUGUI>();
         quitBtn = transform.Find("QuitBtn").GetComponent<Button>();
-        quitBtn.onClick.AddListener(gameManager.QuitGame);
+        quitBtn.onClick.AddListener(() => EventManager.QuitBtnClicked.Invoke());
     }
-
+    void Update()
+    {
+        if (nameInput.isFocused)
+        {
+            if (inputFieldTookFocus)
+            {
+                inputFieldTookFocus = false;
+                errorMessageText.alpha = 0f;
+                nameInput.text = "";
+            }
+        }
+        else
+        {
+            inputFieldTookFocus = true;
+        }
+    }
     private void OnAcceptClicked()
     {
         string name = nameInput.text;
@@ -52,20 +85,12 @@ public class UINamePanel : Panel
             return;
         }
 
-        errorMessageGroup.alpha = 0f;
-        gameManager.Player.PlayerName = name;
-        DisplayNextPanel();
+        EventManager.PlayerNameSet.Invoke(name);
     }
 
     private void DisplayError(string msg)
     {
         errorMessageGroup.alpha = 1f;
         errorMessageText.text = msg;
-    }
-
-    private void DisplayNextPanel()
-    {
-        Debug.Log($"{this.name}:{MethodBase.GetCurrentMethod().Name}> Next Panel: {GameManager.PanelNames[GameManager.Panels.networkPanel]}");
-        panelManager.Push(GameManager.PanelNames[GameManager.Panels.networkPanel]);
     }
 }

@@ -20,15 +20,13 @@ using CoghillClan.PanelManager;
  * Version: 0.1.0
  * Version History
  * ----------------------------------------------------------------------------
-// DELETEME Delete the following line before first rc commit
- * nn.nn.nn dd-mmm-yyyy Comment 
  * 0.1.0    29-Oct-2025 From scratch
  **/
-public class UISplashScreen : Panel
+public class SplashScreen : Panel
 {
     public void LoadNewSceneTimelineSignal()
     {
         Debug.Log($"{this.name}:{MethodBase.GetCurrentMethod().Name}> Next Panel: {GameManager.PanelNames[GameManager.Panels.namePanel]}");
-        panelManager.Push(GameManager.PanelNames[GameManager.Panels.namePanel]);
+        EventManager.SplashScreenFinished.Invoke();
     }
 }

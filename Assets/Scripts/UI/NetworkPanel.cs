@@ -1,16 +1,30 @@
 using UnityEngine;
 using CoghillClan.PanelManager;
 using UnityEngine.UI;
-// using UnityEngine.UIElements;
-using System;
-using System.Reflection;
 using TMPro;
 using Unity.VisualScripting;
-using System.Runtime.CompilerServices;
-public class UINetworkPanel : Panel
+
+/**
+ *
+ * Copyright © 2025 by Steven M. Coghill
+ * This project is licensed under the MIT License.
+ * A copy of the MIT License can be found in the 
+ * accompanying LICENSE.txt file.
+ **/
+/** 
+ * https://games.coghillclan.net/GreatMinds
+ * 
+ * https://www.github.com/BriarSMC/GreatMindsGame.git
+ *
+ * Version: 0.0.0
+ * Version History
+ * ----------------------------------------------------------------------------
+ * 0.1.0    29-Oct-2025 From scratch  * 
+ **/
+
+public class NetworkPanel : Panel
 {
     GameManager gameManager;
-    // PanelManager panelManager;
     Button hostBtn;
     Button joinBtn;
     GameObject connectionGroup;
@@ -24,16 +38,16 @@ public class UINetworkPanel : Panel
     {
         gameManager = GameManager.Instance;
         hostBtn = GameObject.Find("HostBtn").GetComponent<Button>();
-        hostBtn.onClick.AddListener(HostBtnClicked);
+        hostBtn.onClick.AddListener(() => EventManager.HostBtnClicked.Invoke());
         joinBtn = GameObject.Find("JoinBtn").GetComponent<Button>();
-        joinBtn.onClick.AddListener(JoinBtnClicked);
+        joinBtn.onClick.AddListener(() => { errorMessageText.alpha = 1f; });
         connectionGroup = transform.Find("ConnectionGroup").gameObject;
         connectionGroup.SetActive(false);
         hostNumberInput = connectionGroup.transform.Find("HostNumberInput").GetComponent<TMP_InputField>();
         errorMessageText = connectionGroup.transform.Find("ErrorMessageText").GetComponent<TextMeshProUGUI>();
         errorMessageText.alpha = 0f;
         connectBtn = connectionGroup.transform.Find("ConnectBtn").GetComponent<Button>();
-        connectBtn.onClick.AddListener(ConnectBtnClicked);
+        connectBtn.onClick.AddListener(OnConnectBtnClicked);
     }
 
     void Update()
@@ -53,26 +67,14 @@ public class UINetworkPanel : Panel
         }
     }
 
-    private void HostBtnClicked()
-    {
-        gameManager.SetWeAreHost();
-        panelManager.Push(GameManager.PanelNames[GameManager.Panels.hostPanel]);
-    }
-
-    private void JoinBtnClicked()
-    {
-        connectionGroup.SetActive(true);
-    }
-
-    private void ConnectBtnClicked()
+    private void OnConnectBtnClicked()
     {
         int i;
         if (hostNumberInput.text.IsUnityNull()) { DisplayErrorMessage("Please enter a number."); return; }
         if (!int.TryParse(hostNumberInput.text, out i)) { DisplayErrorMessage("Please enter a number."); return; }
         if (i <= 0 || i > 254) { DisplayErrorMessage("Host number must be between 1 and 254."); return; }
 
-        gameManager.SetWeArePlayer(i);
-        panelManager.Push(GameManager.PanelNames[GameManager.Panels.playPanel]);
+        EventManager.JoinBtnClicked.Invoke(i.ToString());
     }
 
     private void DisplayErrorMessage(string s)
