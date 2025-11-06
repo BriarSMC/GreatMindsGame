@@ -27,7 +27,7 @@ public class NetworkPanel : Panel
     GameManager gameManager;
     Button hostBtn;
     Button joinBtn;
-    GameObject connectionGroup;
+    CanvasGroup connectionGroup;
     TMP_InputField hostNumberInput;
     TMP_Text errorMessageText;
     Button connectBtn;
@@ -40,9 +40,9 @@ public class NetworkPanel : Panel
         hostBtn = GameObject.Find("HostBtn").GetComponent<Button>();
         hostBtn.onClick.AddListener(() => EventManager.HostBtnClicked.Invoke());
         joinBtn = GameObject.Find("JoinBtn").GetComponent<Button>();
-        joinBtn.onClick.AddListener(() => { errorMessageText.alpha = 1f; });
-        connectionGroup = transform.Find("ConnectionGroup").gameObject;
-        connectionGroup.SetActive(false);
+        joinBtn.onClick.AddListener(() => { connectionGroup.alpha = 1f; });
+        connectionGroup = transform.Find("ConnectionGroup").GetComponent<CanvasGroup>();
+        connectionGroup.alpha = 0f;
         hostNumberInput = connectionGroup.transform.Find("HostNumberInput").GetComponent<TMP_InputField>();
         errorMessageText = connectionGroup.transform.Find("ErrorMessageText").GetComponent<TextMeshProUGUI>();
         errorMessageText.alpha = 0f;
