@@ -25,8 +25,6 @@ using System.Collections.Generic;
  * Version: 0.1.0
  * Version History
  * ----------------------------------------------------------------------------
-// DELETEME Delete the following line before first rc commit
- * nn.nn.nn dd-mmm-yyyy Comment 
  * 0.1.0    28-Oct-2025 Cloned from GreatMinds-RPC-Test
  *          28-Oct-2025 Refactored Awake and Start out of GameManager.cs
  *          28-Oct-2025 Refactored public methods out of GameManager.cs
@@ -55,13 +53,13 @@ public partial class GameManager : NetworkBehaviour
     public static readonly Dictionary<Panels, string> PanelNames =
         new Dictionary<Panels, string>
         {
-            { Panels.splashPanel, "SplashPanel"},
-            { Panels.namePanel, "NamePanel"},
-            { Panels.networkPanel, "NetworkPanel"},
-            {Panels.hostPanel, "HostPanel"},
-            { Panels.playPanel, "PlayPanel"},
-            { Panels.resultsPanel, "ResultsPanel"},
-            { Panels.messagePanel, "MessagePanel"},
+            { Panels.splashPanel, "SplashPanel" },
+            { Panels.namePanel, "NamePanel" },
+            { Panels.networkPanel, "NetworkPanel" },
+            { Panels.hostPanel, "HostPanel" },
+            { Panels.playPanel, "PlayPanel" },
+            { Panels.resultsPanel, "ResultsPanel" },
+            { Panels.messagePanel, "MessagePanel" },
         };
 
 

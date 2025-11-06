@@ -25,8 +25,6 @@ using CoghillClan.PanelManager;
  * Version: 0.1.0
  * Version History
  * ----------------------------------------------------------------------------
-// DELETEME Delete the following line before first rc commit
- * nn.nn.nn dd-mmm-yyyy Comment 
  * 0.1.0    28-Oct-2025 Refactored public methods out of GameManager.cs
  **/
 
@@ -53,17 +51,6 @@ public partial class GameManager : NetworkBehaviour
     // SetHeaderText();
   }
 
-  public void QuitGame()
-  {
-#if UNITY_EDITOR
-    // This code will only run in the Unity Editor
-    EditorApplication.isPlaying = false;
-#else
-        // This code will run in a built application (though it won't be called if ExitGameInEditor is only for editor)
-        Application.Quit(); 
-#endif
-  }
-
   public void Panic(PanicCode code)
   {
     panicCode = code;
@@ -77,14 +64,5 @@ public partial class GameManager : NetworkBehaviour
 
   public void SetWeAreHost()
   {
-    WeAreHost = true;
-    ClientType = (int)ClientTypes.host;
-  }
-
-  public void SetWeArePlayer(int hostNumber)
-  {
-    ConnectToHostNumber = hostNumber.ToString();
-    WeArePlayer = true;
-    ClientType = (int)ClientTypes.player;
   }
 }

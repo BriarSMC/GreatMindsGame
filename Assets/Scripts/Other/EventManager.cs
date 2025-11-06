@@ -27,7 +27,13 @@ class EventManager : MonoBehaviour
     public static EventManager Instance;
 
     // Events
+    public static UnityEvent SplashScreenFinished = new UnityEvent();
+    public static UnityEvent<string> PlayerNameSet = new UnityEvent<string>();
     public static UnityEvent PlayStarted = new UnityEvent();
+    public static UnityEvent HostBtnClicked = new UnityEvent();
+    public static UnityEvent<string> JoinBtnClicked = new UnityEvent<string>();
+    public static UnityEvent QuitBtnClicked = new UnityEvent();
+
 
     private void Awake()
     {

@@ -2586,7 +2586,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 1543369056
+  GlobalObjectIdHash: 3324234334
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -8541,7 +8541,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1599459386}
   - component: {fileID: 1599459387}
-  - component: {fileID: 1599459388}
   m_Layer: 5
   m_Name: ConnectionGroup
   m_TagString: Untagged
@@ -8598,18 +8597,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!225 &1599459388
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1599459385}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!1 &1602000422
 GameObject:
   m_ObjectHideFlags: 0
@@ -9707,10 +9694,10 @@ RectTransform:
   - {fileID: 1986069161}
   - {fileID: 513962153}
   - {fileID: 1285714325}
-  - {fileID: 2008257777}
   - {fileID: 1498607763}
   - {fileID: 1716808299}
   - {fileID: 1118136572}
+  - {fileID: 2008257777}
   m_Father: {fileID: 514227918}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
