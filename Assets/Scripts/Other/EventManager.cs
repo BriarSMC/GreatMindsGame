@@ -20,7 +20,7 @@ using UnityEngine.Events;
  * ----------------------------------------------------------------------------
  * 0.1.0    01-Nov-2025 From scratch
  **/
-
+//FIXME Refactor to class GameEvents{}
 class EventManager : MonoBehaviour
 {
     // Our instance variable
@@ -31,7 +31,7 @@ class EventManager : MonoBehaviour
     public static UnityEvent<string> PlayerNameSet = new UnityEvent<string>();
     public static UnityEvent PlayStarted = new UnityEvent();
     public static UnityEvent HostBtnClicked = new UnityEvent();
-    public static UnityEvent<string> JoinBtnClicked = new UnityEvent<string>();
+    public static UnityEvent<string> ConnectBtnClicked = new UnityEvent<string>();
     public static UnityEvent QuitBtnClicked = new UnityEvent();
 
 

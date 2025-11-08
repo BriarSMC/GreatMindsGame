@@ -1,5 +1,8 @@
 using Unity.Netcode;
 using UnityEngine;
+using System.Reflection;
+using Unity.Netcode.Transports.UTP;
+using System;
 
 /**
  *
@@ -27,7 +30,7 @@ public partial class GameManager : NetworkBehaviour
         EventManager.SplashScreenFinished.AddListener(OnSplashScreenFinished);
         EventManager.PlayerNameSet.AddListener(OnPlayerNameSet);
         EventManager.HostBtnClicked.AddListener(OnHostBtnClicked);
-        EventManager.JoinBtnClicked.AddListener(OnJoinBtnClicked);
+        EventManager.ConnectBtnClicked.AddListener(OnConnectBtnClicked);
         EventManager.QuitBtnClicked.AddListener(QuitGame);
     }
 
@@ -46,14 +49,27 @@ public partial class GameManager : NetworkBehaviour
     {
         WeAreHost = true;
         ClientType = (int)ClientTypes.host;
+        if (!NetworkManager.Singleton.StartHost()) Panic(PanicCode.CouldNotStartHost);
+
         panelManager.Push(GameManager.PanelNames[GameManager.Panels.hostPanel]);
     }
 
-    private void OnJoinBtnClicked(string host)
+    private void OnConnectBtnClicked(string host)
     {
+        Debug.Log($"{this.name}:{MethodBase.GetCurrentMethod().Name}> {host}/{OurIPAddress}");
+        UnityTransport transport = NetworkManager.Singleton.GetComponent<UnityTransport>();
+        if (transport == null) Panic(PanicCode.NetworkTransportNotFound);
+
+        string[] ourIPAddr = OurIPAddress.Split(".");
+        ourIPAddr[ourIPAddr.Length - 1] = host;
+        string iPAddr = String.Join(".", ourIPAddr);
+        transport.SetConnectionData(iPAddr, k_GamePortNumber);
         WeArePlayer = true;
         ClientType = (int)ClientTypes.player;
         ConnectToHostNumber = host;
+
+        if (!NetworkManager.Singleton.StartClient()) Panic(PanicCode.CouldNotStartClient);
+
         panelManager.Push(GameManager.PanelNames[GameManager.Panels.playPanel]);
     }
 

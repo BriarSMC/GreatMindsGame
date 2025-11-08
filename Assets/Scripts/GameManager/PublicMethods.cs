@@ -42,10 +42,11 @@ public partial class GameManager : NetworkBehaviour
 
   public void OnClientConnectedCallback(ulong clientId)
   {
+    Debug.Log($"{this.name}:{MethodBase.GetCurrentMethod().Name}> clientId: {clientId}/ClientId: {ClientId}");
+
     if (clientId != NetworkManager.Singleton.LocalClientId) return;
 
     ClientId = clientId;
-    Debug.Log($"{this.name}:{MethodBase.GetCurrentMethod().Name}> clientId: {clientId}/ClientId: {ClientId}");
 
     // AddPlayerRpc(ClientId, "NameNotSet");
     // SetHeaderText();

@@ -69,6 +69,7 @@ public partial class GameManager : NetworkBehaviour
     // Constants
 
     public const string k_PanicSceneName = "PanicScene";
+    public const int k_GamePortNumber = 7777;
 
     public const string k_PanelManagerPath = "/UIManager/Canvas/PanelManager/";
 

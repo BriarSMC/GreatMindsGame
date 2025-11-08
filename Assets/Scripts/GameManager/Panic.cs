@@ -28,6 +28,9 @@ public partial class GameManager : NetworkBehaviour
   {
     NoGameManagerFound,
     NoNetworkManagerFound,
+    CouldNotStartHost,
+    CouldNotStartClient,
+    NetworkTransportNotFound,
   }
 
 
@@ -36,5 +39,8 @@ public partial class GameManager : NetworkBehaviour
   {
     {(int) PanicCode.NoGameManagerFound, "Could not find the GameManager." },
     {(int) PanicCode.NoNetworkManagerFound, "Could not find the NetworkManager."},
+    {(int) PanicCode.CouldNotStartHost, "Could not start as a Host."},
+    {(int) PanicCode.CouldNotStartClient, "Could not start as a Client."},
+    {(int) PanicCode.NetworkTransportNotFound, "Could not find the Network Transport."},
   };
 }

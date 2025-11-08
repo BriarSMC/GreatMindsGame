@@ -74,7 +74,7 @@ public class NetworkPanel : Panel
         if (!int.TryParse(hostNumberInput.text, out i)) { DisplayErrorMessage("Please enter a number."); return; }
         if (i <= 0 || i > 254) { DisplayErrorMessage("Host number must be between 1 and 254."); return; }
 
-        EventManager.JoinBtnClicked.Invoke(i.ToString());
+        EventManager.ConnectBtnClicked.Invoke(i.ToString());
     }
 
     private void DisplayErrorMessage(string s)
