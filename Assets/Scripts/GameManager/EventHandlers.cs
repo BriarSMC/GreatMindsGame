@@ -41,7 +41,7 @@ public partial class GameManager : NetworkBehaviour
 
     private void OnPlayerNameSet(string name)
     {
-        Player.PlayerName = name;
+        PlayerName = name;
         panelManager.Push(GameManager.PanelNames[GameManager.Panels.networkPanel]);
     }
 
@@ -50,6 +50,8 @@ public partial class GameManager : NetworkBehaviour
         WeAreHost = true;
         ClientType = (int)ClientTypes.host;
         if (!NetworkManager.Singleton.StartHost()) Panic(PanicCode.CouldNotStartHost);
+        ClientId = NetworkManager.Singleton.LocalClientId;
+        // AddPlayerRpc(ClientId, PlayerName);
 
         panelManager.Push(GameManager.PanelNames[GameManager.Panels.hostPanel]);
     }
@@ -63,12 +65,16 @@ public partial class GameManager : NetworkBehaviour
         string[] ourIPAddr = OurIPAddress.Split(".");
         ourIPAddr[ourIPAddr.Length - 1] = host;
         string iPAddr = String.Join(".", ourIPAddr);
-        transport.SetConnectionData(iPAddr, k_GamePortNumber);
+        //FIXME transport.SetConnectionData(iPAddr, k_GamePortNumber);
         WeArePlayer = true;
         ClientType = (int)ClientTypes.player;
         ConnectToHostNumber = host;
 
         if (!NetworkManager.Singleton.StartClient()) Panic(PanicCode.CouldNotStartClient);
+        ClientId = NetworkManager.Singleton.LocalClientId;
+        Debug.Log($"{this.name}:{MethodBase.GetCurrentMethod().Name}> {NetworkManager.Singleton.IsClient} {NetworkManager.Singleton.IsConnectedClient} {NetworkManager.Singleton.ConnectedClientsIds}");
+
+        // AddPlayerRpc(ClientId, PlayerName);
 
         panelManager.Push(GameManager.PanelNames[GameManager.Panels.playPanel]);
     }

@@ -51,7 +51,7 @@ public partial class GameManager : NetworkBehaviour
 
   void Start()
   {
-    FakeSpawnPlayer();  //DELETEME TESTING PURPOSES ONLY
+    // FakeSpawnPlayer();  //DELETEME TESTING PURPOSES ONLY
     RegisterEvents();
     NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnectedCallback;
     GetOurIPAddress();
@@ -66,9 +66,9 @@ public partial class GameManager : NetworkBehaviour
 
   //DELETEME VERY TEMPORARY!!!
   //SIMULATE PLAYER BEING SPAWNED
-  private void FakeSpawnPlayer()
-  {
-    Debug.Log($"{this.name}:{MethodBase.GetCurrentMethod().Name}> FAKEPLAYERSPAWN");
-    Player = this.Player = Instantiate(prefab);
-  }
+  // private void FakeSpawnPlayer()
+  // {
+  //   Debug.Log($"{this.name}:{MethodBase.GetCurrentMethod().Name}> FAKEPLAYERSPAWN");
+  //   Player = this.Player = Instantiate(prefab);
+  // }
 }

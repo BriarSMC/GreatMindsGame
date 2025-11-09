@@ -37,16 +37,17 @@ public class Player : NetworkBehaviour
     {
         gameManager = FindFirstObjectByType<GameManager>();
         if (gameManager == null) throw new Exception("Could not find GameManager object.");
-        NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnectedCallback;
+        // NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnectedCallback;
     }
 
     private void OnClientConnectedCallback(ulong obj)
     {
-        _clientId = obj;
+        // _clientId = obj;
     }
 
     public override void OnNetworkSpawn()
     {
+        Debug.Log($"{this.name}:{MethodBase.GetCurrentMethod().Name}> Player has spawned");
         gameManager.Player = this;
     }
 

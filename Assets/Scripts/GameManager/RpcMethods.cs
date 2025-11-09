@@ -27,16 +27,33 @@ using UnityEngine.SceneManagement;
 
 public partial class GameManager : NetworkBehaviour
 {
-  // [Rpc(SendTo.Server)]
-  // public void AddPlayerRpc(ulong clientId, string name)
-  // {
-  //     if (!IsServer) return;
+  /*
+   * Server RPCs
+   */
 
-  //     Debug.Log($"{this.name}:{MethodBase.GetCurrentMethod().Name}> Adding ID: {clientId}  Name: {name}");
-  //     playerData.Add(clientId, name);
-  //     Debug.Log(playerData.Count);
-  //     AppendToOutput($"{clientId} connected.");
-  // }
+  [Rpc(SendTo.Server)]
+  public void AddPlayerRpc(ulong clientId, string name)
+  {
+    if (!IsServer) return;
+
+    Debug.Log($"{this.name}:{MethodBase.GetCurrentMethod().Name}> Adding ID: {clientId}  Name: {name}");
+    players.Add(clientId, name);
+    Debug.Log($"There are {players.Count} players.");
+
+    // Send new list to all clients here
+  }
+
+  /*
+  * Host RPCs
+  * There are no host specific RPCs because the host acts as the server too.
+  */
+
+  /*
+   * Client RPCs
+   */
+
+
+
 
   // [Rpc(SendTo.Server)]
   // public void SetPlayerNameRpc(ulong clientId, string name)

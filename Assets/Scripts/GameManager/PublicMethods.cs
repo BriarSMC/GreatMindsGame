@@ -43,13 +43,9 @@ public partial class GameManager : NetworkBehaviour
   public void OnClientConnectedCallback(ulong clientId)
   {
     Debug.Log($"{this.name}:{MethodBase.GetCurrentMethod().Name}> clientId: {clientId}/ClientId: {ClientId}");
+    if (clientId != NetworkManager.Singleton.LocalClientId) return; // Only continue if it's the client
 
-    if (clientId != NetworkManager.Singleton.LocalClientId) return;
-
-    ClientId = clientId;
-
-    // AddPlayerRpc(ClientId, "NameNotSet");
-    // SetHeaderText();
+    AddPlayerRpc(clientId, PlayerName);
   }
 
   public void Panic(PanicCode code)

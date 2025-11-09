@@ -41,7 +41,11 @@ public partial class GameManager : NetworkBehaviour
     public PanelManager panelManager;
 
     // Public Properties
+
+    private Dictionary<ulong, string> players = new Dictionary<ulong, string>();
+
     public ulong ClientId;
+    public string PlayerName;
     public string ConnectionType;
     public string OurIPAddress;
     public string OurNodeNumber;
@@ -89,7 +93,7 @@ public partial class GameManager : NetworkBehaviour
     public enum ClientTypes { host = 1, player = 2 }
 
     //DELETEME TEMPORARY CRAP FOR TESTING AND SIMULATION FOLLOWS
-    [SerializeReference] Player prefab;
+    // [SerializeReference] Player prefab;
 
     /*
      * This is a partial class. This file has the name of the class, so we use 
