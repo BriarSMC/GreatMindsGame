@@ -25,6 +25,7 @@ using CoghillClan.PanelManager;
 public class PanicScene : Panel
 {
     /*
+     * PanicScene is used to display catastrophic errors.
      * At Start get the GameManager object so we can get the PanicCode from it, and
      * connect the Quit our quit method.
      * Display the panic message on the screen.
@@ -39,7 +40,6 @@ public class PanicScene : Panel
     {
         gameManager = FindFirstObjectByType<GameManager>();
         if (gameManager == null) throw new NullReferenceException("PanicScene:Start() -> Cannot find GameManager");
-        // gameManager.panelManager.LoadPanels();
         gameManager.panelManager.ManagerEnable(true);
 
         tmpText = GameObject.Find("MessageText").GetComponent<TMP_Text>();

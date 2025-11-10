@@ -22,14 +22,13 @@ using UnityEditor;
 
 public partial class GameManager : NetworkBehaviour
 {
+    // Exit the game here. Do any cleanup work needed,
     public void QuitGame()
     {
-#if UNITY_EDITOR
-        // This code will only run in the Unity Editor
-        EditorApplication.isPlaying = false;
+#if UNITY_EDITOR        
+        EditorApplication.isPlaying = false; // This code will only run in the Unity Editor
 #else
-        // This code will run in a built application (though it won't be called if ExitGameInEditor is only for editor)
-        Application.Quit(); 
+        Application.Quit(); // This code will run in a built application (though it won't be called if ExitGameInEditor is only for editor)
 #endif
     }
 

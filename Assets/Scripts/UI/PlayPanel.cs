@@ -62,7 +62,12 @@ public class PlayPanel : Panel
     public override void OnPanelEnabled()
     {
         EventManager.PlayStarted.AddListener(PlayStartedFired);
-        playerNameText.text = gameManager.Player.PlayerName;
+        playerNameText.text = gameManager.PlayerName;
+    }
+
+    public override void OnPanelDisabled()
+    {
+        EventManager.PlayStarted.RemoveListener(PlayStartedFired);
     }
 
     public void PlayStartedFired()

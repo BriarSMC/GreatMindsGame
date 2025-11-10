@@ -32,37 +32,48 @@ public partial class GameManager : NetworkBehaviour
 {
   private void GetOurIPAddress()
   {
+    /*
+     * Extract our IP address and the "HOST number" from .NET
+     */
     string hostName = Dns.GetHostName();
-    Debug.Log($"Our Host Name: {hostName}");
     IPHostEntry hostEntry = Dns.GetHostEntry(hostName);
     OurIPAddress = hostEntry.AddressList[0].ToString();
-    Debug.Log($"Our IP Address: {OurIPAddress}");
     OurNodeNumber = OurIPAddress.Split('.').Last();
   }
 
   public void OnClientConnectedCallback(ulong clientId)
   {
-    if (clientId != NetworkManager.Singleton.LocalClientId) return;
+    /*
+     * Unity invokes this method when a client connects to host. (Registered in Start.cs)
+     * Unity invokes this for both the server and client. We only want the client to execute
+     * this code. The clients must explicitly call RPC methods to interact with the server.
+     * 
+     * Add our client ID and player name to the server's data structures.
+     */
+    if (clientId != NetworkManager.Singleton.LocalClientId) return; // Only continue if it's the client
 
-    ClientId = clientId;
-    Debug.Log($"{this.name}:{MethodBase.GetCurrentMethod().Name}> clientId: {clientId}/ClientId: {ClientId}");
-
-    // AddPlayerRpc(ClientId, "NameNotSet");
-    // SetHeaderText();
+    AddPlayerRpc(clientId, PlayerName);
   }
 
   public void Panic(PanicCode code)
   {
+    /*
+     * We invoke this routine whenever some catastrophic event happens. Something
+     * totally unexpected and we can't recover from it. 
+     *
+     * We store the panic code passed to us in the GameManager so the next scene
+     * can read it. Since the GameManager is persistent the next scene can retrieve 
+     * it and display the associated message.
+     */
     panicCode = code;
     SceneManager.LoadScene(k_PanicSceneName);
   }
 
   public int GetPanicCodeInt()
   {
+    /*
+     * Return the panic code enum as an integer
+     */
     return (int)panicCode;
-  }
-
-  public void SetWeAreHost()
-  {
   }
 }

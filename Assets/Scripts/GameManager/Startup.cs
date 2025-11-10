@@ -27,12 +27,18 @@ public partial class GameManager : NetworkBehaviour
 {
   void OnEnable()
   {
+    /*
+     * Register method for when a new scene is loaded.
+     * Right now, should only be needed during a PANIC situation.
+     */
     SceneManager.sceneLoaded += OnSceneLoaded;
   }
+
   void Awake()
   {
-    // If we exist, destroy this instance and return, otherwise set Instance
-    // and tell Unity to never unload us.
+    /*
+     * Set us up as a persistent game object
+     */
     if (Instance != null)
     {
       Destroy(this);
@@ -42,7 +48,10 @@ public partial class GameManager : NetworkBehaviour
     Instance = this;
     DontDestroyOnLoad(this.gameObject);
 
-    // Look for various game objects and set our references accordingly
+    /*
+     * Load up references to various objects the GameManager uses a lot.
+     * PANIC if any of them can't be found.
+     */
     panelManager = FindFirstObjectByType<PanelManager>();
     networkManager = FindFirstObjectByType<NetworkManager>();
     if (panelManager == null) Panic(PanicCode.NoNetworkManagerFound);
@@ -51,7 +60,12 @@ public partial class GameManager : NetworkBehaviour
 
   void Start()
   {
-    FakeSpawnPlayer();  //DELETEME TESTING PURPOSES ONLY
+    /*
+     * Register all the events we listen for. (EventHandler.cs)  
+     * Register method to listen for when clients connect to game.
+     * Load our IP address information.
+     * Turn on the PanelManager.
+     */
     RegisterEvents();
     NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnectedCallback;
     GetOurIPAddress();
@@ -60,15 +74,12 @@ public partial class GameManager : NetworkBehaviour
 
   private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
   {
-    Debug.Log($"{this.name}:{MethodBase.GetCurrentMethod().Name}> ");
+    /*
+     * Whenever a new scene is loaded:
+     * Find the PanelManager. 
+     * We don't need the NetworkManager or any other references at this point.
+     */
     panelManager = FindFirstObjectByType<PanelManager>();
   }
 
-  //DELETEME VERY TEMPORARY!!!
-  //SIMULATE PLAYER BEING SPAWNED
-  private void FakeSpawnPlayer()
-  {
-    Debug.Log($"{this.name}:{MethodBase.GetCurrentMethod().Name}> FAKEPLAYERSPAWN");
-    Player = this.Player = Instantiate(prefab);
-  }
 }

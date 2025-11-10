@@ -2586,7 +2586,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 1543369056
+  GlobalObjectIdHash: 2899353217
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -2616,6 +2616,7 @@ MonoBehaviour:
   networkManager: {fileID: 0}
   panelManager: {fileID: 0}
   ClientId: 0
+  PlayerName: 
   ConnectionType: 
   OurIPAddress: 
   OurNodeNumber: 
@@ -2623,7 +2624,6 @@ MonoBehaviour:
   WeAreHost: 0
   WeArePlayer: 0
   ClientType: 0
-  prefab: {fileID: 4550541932606530728, guid: 24f8c640ed44db849b51b0483a6069a5, type: 3}
 --- !u!1 &668492110
 GameObject:
   m_ObjectHideFlags: 0

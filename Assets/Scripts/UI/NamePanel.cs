@@ -25,6 +25,10 @@ using System.Reflection;
 
 public class NamePanel : Panel
 {
+    /*
+     * This panel allows the player to set their name
+     */
+
     GameManager gameManager;
     TMP_InputField nameInput;
     Button acceptBtn;
@@ -53,8 +57,29 @@ public class NamePanel : Panel
         quitBtn = transform.Find("QuitBtn").GetComponent<Button>();
         quitBtn.onClick.AddListener(() => EventManager.QuitBtnClicked.Invoke());
     }
+
     void Update()
     {
+        /*
+         * This update routine controls player interaction with the input field.
+         *
+         * If the user enters invalid data into the field, then we want to:
+         *      - Erase any previous input value
+         *      - Turn off any error message displayed
+         *
+         * We did not want to go through the effort of creating GainFocus and LostFocus events 
+         * for the field. So we do it programmatically by testing the condition of the input field 
+         * each Update() cycle.
+         *
+         * inputFieldTookFocus starts off as true. 
+         * 
+         * If the input field is in focus, then we check to see if inputFieldTookFocus is true.
+         * If so, that means this is the first time through the Update() cycle since it took focus.
+         * So we turn off our flag, turn off the error message and clear the input field.
+         * Otherwise, we set our flag to catch the next time the input field gains focus.
+         * 
+         */
+
         if (nameInput.isFocused)
         {
             if (inputFieldTookFocus)
@@ -69,8 +94,14 @@ public class NamePanel : Panel
             inputFieldTookFocus = true;
         }
     }
+
     private void OnAcceptClicked()
     {
+        /*
+         * String can't be blank or null. 
+         * String can contain only Alphanumeric and the hyphen.
+         */
+
         string name = nameInput.text;
         if (String.IsNullOrEmpty(name))
         {
@@ -90,6 +121,11 @@ public class NamePanel : Panel
 
     private void DisplayError(string msg)
     {
+        /*
+         * To display an error message we have to "enable" the text field by
+         * turning its alpha channel all the way on. Then set the message text.
+         */
+
         errorMessageGroup.alpha = 1f;
         errorMessageText.text = msg;
     }
