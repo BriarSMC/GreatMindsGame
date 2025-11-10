@@ -32,68 +32,6 @@ using System.Collections.Generic;
 **/
 public partial class GameManager : NetworkBehaviour
 {
-    // GameManager is a persistent GameObject
-    public static GameManager Instance;
-
-    // References to game objects
-    public Player Player;
-    public NetworkManager networkManager;
-    public PanelManager panelManager;
-
-    // Public Properties
-
-    private Dictionary<ulong, string> players = new Dictionary<ulong, string>();
-
-    public ulong ClientId;
-    public string PlayerName;
-    public string ConnectionType;
-    public string OurIPAddress;
-    public string OurNodeNumber;
-    public string ConnectToHostNumber;
-    public bool WeAreHost = false;
-    public bool WeArePlayer = false;
-    public int ClientType = 0;
-
-    public static readonly Dictionary<Panels, string> PanelNames =
-        new Dictionary<Panels, string>
-        {
-            { Panels.splashPanel, "SplashPanel" },
-            { Panels.namePanel, "NamePanel" },
-            { Panels.networkPanel, "NetworkPanel" },
-            { Panels.hostPanel, "HostPanel" },
-            { Panels.playPanel, "PlayPanel" },
-            { Panels.resultsPanel, "ResultsPanel" },
-            { Panels.messagePanel, "MessagePanel" },
-        };
-
-
-    // Private Properties
-    private PanicCode panicCode;
-
-    // Constants
-
-    public const string k_PanicSceneName = "PanicScene";
-    public const int k_GamePortNumber = 7777;
-
-    public const string k_PanelManagerPath = "/UIManager/Canvas/PanelManager/";
-
-    // Enums
-
-    public enum Panels
-    {
-        splashPanel,
-        namePanel,
-        networkPanel,
-        hostPanel,
-        playPanel,
-        resultsPanel,
-        messagePanel,
-    }
-
-    public enum ClientTypes { host = 1, player = 2 }
-
-    //DELETEME TEMPORARY CRAP FOR TESTING AND SIMULATION FOLLOWS
-    // [SerializeReference] Player prefab;
 
     /*
      * This is a partial class. This file has the name of the class, so we use 
@@ -107,6 +45,100 @@ public partial class GameManager : NetworkBehaviour
      *   GameManagerPanic.cs            - Panic-Catastrophic error display
      */
 
+    // GameManager is a persistent GameObject
+    public static GameManager Instance;
 
+    // References to game objects
+    public Player Player;
+    public NetworkManager networkManager;
+    public PanelManager panelManager;
+
+    // Public Properties
+
+    /*
+     * players contains information about each player who connects to the host/server.
+     * The OnClientConnectedCallback(ulong clientId) method (PublicMethods.cs) will call
+     * the AddPlayerName() method (RpcMethods.cs) to add players as they connect.
+     */
+    private Dictionary<ulong, string> players = new Dictionary<ulong, string>();
+
+    /*
+     * ClientId         Copy of NetworkManager.Singleton.LocalClientId
+     * PlayerName       Name of this instance's player (Set by NamePanel)
+     * OurIPAddress     This instance's IP address in nnn.nnn.nnn.nnn format
+     * OurNodeNumber    The last nnn number in our IP address (used by the host)
+     * ConnectToHostNumber Used by the client for connecting to the host (used by the clients)
+     * WeAreHost        Used instead of IsHost
+     * WeArePlayer      Used instead of IsClient
+     * ClientType       1 = Host, 2 = Player
+     */
+    public ulong ClientId;
+    public string PlayerName;
+    public string ConnectionType;
+    public string OurIPAddress;
+    public string OurNodeNumber;
+    public string ConnectToHostNumber;
+    public bool WeAreHost = false;
+    public bool WeArePlayer = false;
+    public int ClientType = 0;
+
+    public enum ClientTypes { host = 1, player = 2 }
+
+    /*
+     * All code should refer to individual UI panels by the Panels enum.
+     * The Dictionary translates the enum values to strings for the PanelManager
+     * package.
+     */
+    public enum Panels
+    {
+        splashPanel,
+        namePanel,
+        networkPanel,
+        hostPanel,
+        playPanel,
+        resultsPanel,
+        messagePanel,
+    }
+
+    public static readonly Dictionary<Panels, string> PanelNames =
+        new Dictionary<Panels, string>
+        {
+            { Panels.splashPanel, "SplashPanel" },
+            { Panels.namePanel, "NamePanel" },
+            { Panels.networkPanel, "NetworkPanel" },
+            { Panels.hostPanel, "HostPanel" },
+            { Panels.playPanel, "PlayPanel" },
+            { Panels.resultsPanel, "ResultsPanel" },
+            { Panels.messagePanel, "MessagePanel" },
+        };
+
+    // Panic Codes
+    private PanicCode panicCode;
+
+    public enum PanicCode
+    {
+        NoGameManagerFound,
+        NoNetworkManagerFound,
+        CouldNotStartHost,
+        CouldNotStartClient,
+        NetworkTransportNotFound,
+    }
+
+    // Panic Code Messages
+    public static readonly Dictionary<int, string> PanicMessageText = new Dictionary<int, string>()
+  {
+    {(int) PanicCode.NoGameManagerFound, "Could not find the GameManager." },
+    {(int) PanicCode.NoNetworkManagerFound, "Could not find the NetworkManager."},
+    {(int) PanicCode.CouldNotStartHost, "Could not start as a Host."},
+    {(int) PanicCode.CouldNotStartClient, "Could not start as a Client."},
+    {(int) PanicCode.NetworkTransportNotFound, "Could not find the Network Transport."},
+  };
+
+    // Constants
+
+    public const string k_PanicSceneName = "PanicScene";
+    public const int k_GamePortNumber = 7777;
+
+    public const string k_PanelManagerPath = "/UIManager/Canvas/PanelManager/";
 
 }

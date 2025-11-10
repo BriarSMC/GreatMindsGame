@@ -25,11 +25,11 @@ using System.Text.RegularExpressions;
 [HelpURL("https://github.com/BriarSMC/GreatMindsGame/wiki/Player.cs-HelpURL-Page")]
 public class Player : NetworkBehaviour
 {
-    private string _playerName = "Name Not Set";
-    public string PlayerName { get { return _playerName; } set { _playerName = SetPlayerName(value); } }
-
-    private ulong _clientId;
-    public ulong ClientId { get { return _clientId; } }
+    /*
+     * The Player object exists solely to serve as the spawn object for NetworkManager.
+     * We do almost nothing other than store our object instance in the GameManager should
+     * we ever decide we need to do something with the Player object.
+     */
 
     private GameManager gameManager;
 
@@ -37,33 +37,12 @@ public class Player : NetworkBehaviour
     {
         gameManager = FindFirstObjectByType<GameManager>();
         if (gameManager == null) throw new Exception("Could not find GameManager object.");
-        // NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnectedCallback;
     }
 
-    private void OnClientConnectedCallback(ulong obj)
-    {
-        // _clientId = obj;
-    }
 
     public override void OnNetworkSpawn()
     {
         Debug.Log($"{this.name}:{MethodBase.GetCurrentMethod().Name}> Player has spawned");
         gameManager.Player = this;
-    }
-
-    private string SetPlayerName(string value)
-    {
-        /*
-         * Null or blank names are not allowed.
-         * Strip any non-printable characters from the string.
-         */
-        if (String.IsNullOrEmpty(value)) return _playerName;
-
-        return Regex.Replace(value, @"\p{C}", string.Empty);
-    }
-
-    public void SetClientId(ulong clientId)
-    {
-        _clientId = clientId;
     }
 }

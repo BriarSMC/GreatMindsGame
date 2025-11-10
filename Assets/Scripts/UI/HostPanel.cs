@@ -23,6 +23,16 @@ using UnityEngine.UI;
 
 public class HostPanel : Panel
 {
+    /*
+     * This panel lets the host start the game.
+     * It displays:
+     *      The Game Number (Host Node Number)
+     *      List of connected players
+     *      A START button
+     *
+     *  
+     */
+
     GameManager gameManager;
     TextMeshProUGUI playerNamePrefab;
 
@@ -53,7 +63,7 @@ public class HostPanel : Panel
 
     private void OnStartGameBtnClicked()
     {
-        playerNamePrefab.text = $"Player: {gameManager.Player.PlayerName}";
+        playerNamePrefab.text = $"Player: {gameManager.PlayerName}";
         playerNamePrefab.transform.SetParent(playerListPanel, false);
         EventManager.PlayStarted.Invoke();
     }

@@ -23,6 +23,10 @@ using System;
 
 public class UIManager : MonoBehaviour
 {
+    /*
+     * Really serves no purpose other than to make sure the PanelManager script 
+     * is attached to a child object.
+     */
 
     [SerializeReference] PanelManager panelManager;
 
@@ -35,8 +39,4 @@ public class UIManager : MonoBehaviour
     }
 
 
-    void Update()
-    {
-
-    }
 }

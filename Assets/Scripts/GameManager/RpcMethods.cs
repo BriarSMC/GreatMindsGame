@@ -27,18 +27,24 @@ using UnityEngine.SceneManagement;
 
 public partial class GameManager : NetworkBehaviour
 {
-  /*
+  /**
    * Server RPCs
-   */
+   **/
 
   [Rpc(SendTo.Server)]
   public void AddPlayerRpc(ulong clientId, string name)
   {
-    if (!IsServer) return;
+    /*
+     * A client invokes this method when adds the game's information to the server.
+     * The server does not "listen" for clients to connect. Each client must explicitly
+     * tell the server when it wants to join the game.
+     *
+     * Right now we just add the client's ID and player name to server's data structure.
+     */
 
-    Debug.Log($"{this.name}:{MethodBase.GetCurrentMethod().Name}> Adding ID: {clientId}  Name: {name}");
+    if (!IsServer) return; // Probably redundant since we are declared SendTo.Server, but ...
+
     players.Add(clientId, name);
-    Debug.Log($"There are {players.Count} players.");
 
     // Send new list to all clients here
   }

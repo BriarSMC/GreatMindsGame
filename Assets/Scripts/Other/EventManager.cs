@@ -23,6 +23,15 @@ using UnityEngine.Events;
 //FIXME Refactor to class GameEvents{}
 class EventManager : MonoBehaviour
 {
+    /*
+     * EventManager is a persistent object used to define UnityEvent objects
+     * used for controlling the game.
+     *
+     * GreatMinds is an event driven game. Events control all game logic.
+     * Other code in the game either subscribe to the events below or invoke 
+     * them as needed.
+     */
+
     // Our instance variable
     public static EventManager Instance;
 
@@ -37,8 +46,10 @@ class EventManager : MonoBehaviour
 
     private void Awake()
     {
-        // If we exist, destroy this instance and return, otherwise set Instance
-        // and tell Unity to never unload us.
+        /*
+         * Set up as a persistent game object
+         */
+
         if (Instance != null)
         {
             Destroy(this);

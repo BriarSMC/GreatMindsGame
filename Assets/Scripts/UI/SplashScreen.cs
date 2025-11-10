@@ -24,9 +24,15 @@ using CoghillClan.PanelManager;
  **/
 public class SplashScreen : Panel
 {
+    /*
+     * This is the first panel displayed by the game. The SplashScreenPanel
+     * has an animation track to wait a period of time. When that time expires
+     * the animation track invokes the method below to fire our own signal that
+     * the game can display the next panel.
+     */
+
     public void LoadNewSceneTimelineSignal()
     {
-        Debug.Log($"{this.name}:{MethodBase.GetCurrentMethod().Name}> Next Panel: {GameManager.PanelNames[GameManager.Panels.namePanel]}");
         EventManager.SplashScreenFinished.Invoke();
     }
 }
