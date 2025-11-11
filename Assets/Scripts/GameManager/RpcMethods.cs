@@ -41,13 +41,24 @@ public partial class GameManager : NetworkBehaviour
      * tell the server when it wants to join the game.
      *
      * Right now we just add the client's ID and player name to server's data structure.
+     * Tell the clients new copy the new data.
      */
 
     if (!IsServer) return; // Probably redundant since we are declared SendTo.Server, but ...
 
     players.Add(clientId, name);
-    EventManager.UpdateHostsPlayerList.Invoke();
-    // Send new list to all clients here
+    SetNewPlayerListRpc(players);
+  }
+
+  [Rpc(SendTo.ClientsAndHost)]
+  public void SetNewPlayerListRpc(Dictionary<ulong, string> newData)
+  {
+    /*
+     * If we are the server, then just return cuz we maintain the data anyway.
+     * Tell game new data is available
+     */
+    if (IsServer) return;
+    EventManager.NewPlayerListAvailable.Invoke(newData);
   }
 
   /*

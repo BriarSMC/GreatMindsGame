@@ -10,6 +10,7 @@ using UnityEngine.SceneManagement;
 using Unity.VisualScripting;
 using CoghillClan.PanelManager;
 using System.Collections.Generic;
+using System.Text.Json;
 
 /**
  *
@@ -93,5 +94,22 @@ public partial class GameManager : NetworkBehaviour
     {
       Destroy(obj.transform.GetChild(i).gameObject);
     }
+  }
+
+  public string ConvertPlayersToJSON(Dictionary<ulong, string> dict)
+  {
+    /*
+     * We can't send Dictionary data directly by RPC calls.
+     * Since
+     */
+
+    string json = "";
+    foreach (Dictionary<ulong, string> d in dict)
+    {
+      json += "{\"key\": " +
+    }
+
+
+    return json;
   }
 }

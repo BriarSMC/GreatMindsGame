@@ -3,6 +3,8 @@ using UnityEngine;
 using System.Reflection;
 using Unity.Netcode.Transports.UTP;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 /**
  *
@@ -41,6 +43,7 @@ public partial class GameManager : NetworkBehaviour
         EventManager.PlayerNameSet.AddListener(OnPlayerNameSet);
         EventManager.HostBtnClicked.AddListener(OnHostBtnClicked);
         EventManager.ConnectBtnClicked.AddListener(OnConnectBtnClicked);
+        EventManager.NewPlayerListAvailable.AddListener(OnNewPlayerListAvailable);
 
         EventManager.QuitBtnClicked.AddListener(QuitGame);
     }
@@ -117,5 +120,17 @@ public partial class GameManager : NetworkBehaviour
 
 
         panelManager.Push(GameManager.PanelNames[GameManager.Panels.playPanel]);
+    }
+
+    private void OnNewPlayerListAvailable(Dictionary<ulong, string> newDictionary)
+    {
+        /*
+         * The players data has been updated.
+         * If we are the server, then just ignore cuz the server maintains the data.
+         * Copy the new data to our instance's data.
+         * Now trigger to update players data wherever needed.
+         */
+        players = newDictionary.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+        EventManager.UpdateHostsPlayerList.Invoke();
     }
 }
