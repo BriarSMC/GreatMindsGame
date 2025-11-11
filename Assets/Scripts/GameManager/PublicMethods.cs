@@ -9,6 +9,7 @@ using Unity.Netcode;
 using UnityEngine.SceneManagement;
 using Unity.VisualScripting;
 using CoghillClan.PanelManager;
+using System.Collections.Generic;
 
 /**
  *
@@ -75,5 +76,22 @@ public partial class GameManager : NetworkBehaviour
      * Return the panic code enum as an integer
      */
     return (int)panicCode;
+  }
+
+  public Dictionary<ulong, string> GetPlayers()
+  {
+    /*
+     * Return deep copy of the players dictionary
+     */
+
+    return players.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+  }
+
+  public void DestroyAllChildren(GameObject obj)
+  {
+    for (int i = obj.transform.childCount - 1; i >= 0; i--)
+    {
+      Destroy(obj.transform.GetChild(i).gameObject);
+    }
   }
 }

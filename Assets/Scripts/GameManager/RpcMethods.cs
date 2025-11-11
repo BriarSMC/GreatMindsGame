@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEditor;
 using Unity.Netcode;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 /**
  *
@@ -45,7 +46,7 @@ public partial class GameManager : NetworkBehaviour
     if (!IsServer) return; // Probably redundant since we are declared SendTo.Server, but ...
 
     players.Add(clientId, name);
-
+    EventManager.UpdateHostsPlayerList.Invoke();
     // Send new list to all clients here
   }
 
@@ -57,8 +58,6 @@ public partial class GameManager : NetworkBehaviour
   /*
    * Client RPCs
    */
-
-
 
 
   // [Rpc(SendTo.Server)]

@@ -41,6 +41,7 @@ class EventManager : MonoBehaviour
     public static UnityEvent PlayStarted = new UnityEvent();
     public static UnityEvent HostBtnClicked = new UnityEvent();
     public static UnityEvent<string> ConnectBtnClicked = new UnityEvent<string>();
+    public static UnityEvent UpdateHostsPlayerList = new UnityEvent();
     public static UnityEvent QuitBtnClicked = new UnityEvent();
 
 

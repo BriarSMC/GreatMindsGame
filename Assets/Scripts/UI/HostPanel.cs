@@ -2,6 +2,7 @@ using UnityEngine;
 using CoghillClan.PanelManager;
 using TMPro;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 /**
  *
@@ -54,6 +55,8 @@ public class HostPanel : Panel
         quitBtn = transform.Find("QuitBtn").GetComponent<Button>();
         quitBtn.onClick.AddListener(gameManager.QuitGame);
         playerListPanel = transform.Find("PlayerListPanel").GetComponent<RectTransform>();
+
+        EventManager.UpdateHostsPlayerList.AddListener(OnUpdateHostsPlayerList);
     }
 
     public override void OnPanelEnabled()
@@ -63,8 +66,23 @@ public class HostPanel : Panel
 
     private void OnStartGameBtnClicked()
     {
-        playerNamePrefab.text = $"Player: {gameManager.PlayerName}";
-        playerNamePrefab.transform.SetParent(playerListPanel, false);
         EventManager.PlayStarted.Invoke();
+    }
+
+
+    private void OnUpdateHostsPlayerList()
+    {
+        /*
+         * Update the players list in the HostPanel
+         */
+        gameManager.DestroyAllChildren(playerListPanel.gameObject); //transform.Find("PlayerListPanel").gameObject);
+
+        foreach (KeyValuePair<ulong, string> kvp in gameManager.GetPlayers())
+        {
+            string tmp = $"{kvp.Value} ({kvp.Key})";
+            TextMeshProUGUI prefab = Instantiate(playerNamePrefab);
+            prefab.text = tmp;
+            prefab.transform.SetParent(playerListPanel, false);
+        }
     }
 }

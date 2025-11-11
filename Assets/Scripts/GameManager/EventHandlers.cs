@@ -41,6 +41,7 @@ public partial class GameManager : NetworkBehaviour
         EventManager.PlayerNameSet.AddListener(OnPlayerNameSet);
         EventManager.HostBtnClicked.AddListener(OnHostBtnClicked);
         EventManager.ConnectBtnClicked.AddListener(OnConnectBtnClicked);
+
         EventManager.QuitBtnClicked.AddListener(QuitGame);
     }
 
