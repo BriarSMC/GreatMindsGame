@@ -56,7 +56,7 @@ public class HostPanel : Panel
         quitBtn.onClick.AddListener(gameManager.QuitGame);
         playerListPanel = transform.Find("PlayerListPanel").GetComponent<RectTransform>();
 
-        EventManager.UpdateHostsPlayerList.AddListener(OnUpdateHostsPlayerList);
+        GameEvents.UpdateHostsPlayerList.AddListener(OnUpdateHostsPlayerList);
     }
 
     public override void OnPanelEnabled()
@@ -67,7 +67,7 @@ public class HostPanel : Panel
 
     private void OnStartGameBtnClicked()
     {
-        EventManager.PlayStarted.Invoke();
+        GameEvents.PlayStarted.Invoke();
     }
 
 

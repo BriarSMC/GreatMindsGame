@@ -71,8 +71,8 @@ public class PlayPanel : Panel
 
     private void SetListeners()
     {
-        EventManager.PlayStarted.AddListener(PlayStartedFired);
-        EventManager.UpdateHostsPlayerList.AddListener(OnUpdateHostsPlayerList);
+        GameEvents.PlayStarted.AddListener(PlayStartedFired);
+        GameEvents.UpdateHostsPlayerList.AddListener(OnUpdateHostsPlayerList);
     }
 
     public override void OnPanelEnabled()
@@ -82,7 +82,7 @@ public class PlayPanel : Panel
 
     public override void OnPanelDisabled()
     {
-        EventManager.PlayStarted.RemoveListener(PlayStartedFired);
+        GameEvents.PlayStarted.RemoveListener(PlayStartedFired);
     }
 
     public void PlayStartedFired()

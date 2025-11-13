@@ -22,10 +22,10 @@ using UnityEngine.Events;
  * 0.1.0    01-Nov-2025 From scratch
  **/
 //FIXME Refactor to class GameEvents{}
-class EventManager : MonoBehaviour
+class GameEvents : MonoBehaviour
 {
     /*
-     * EventManager is a persistent object used to define UnityEvent objects
+     * GameEvents is a persistent object used to define UnityEvent objects
      * used for controlling the game.
      *
      * GreatMinds is an event driven game. Events control all game logic.
@@ -34,7 +34,7 @@ class EventManager : MonoBehaviour
      */
 
     // Our instance variable
-    public static EventManager Instance;
+    public static GameEvents Instance;
 
     // Events
     public static UnityEvent SplashScreenFinished = new UnityEvent();

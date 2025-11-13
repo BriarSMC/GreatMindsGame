@@ -52,7 +52,7 @@ public class NetworkPanel : Panel
     {
         gameManager = GameManager.Instance;
         hostBtn = GameObject.Find("HostBtn").GetComponent<Button>();
-        hostBtn.onClick.AddListener(() => EventManager.HostBtnClicked.Invoke());
+        hostBtn.onClick.AddListener(() => GameEvents.HostBtnClicked.Invoke());
         joinBtn = GameObject.Find("JoinBtn").GetComponent<Button>();
         joinBtn.onClick.AddListener(() => { connectionGroup.alpha = 1f; });
         connectionGroup = transform.Find("ConnectionGroup").GetComponent<CanvasGroup>();
@@ -112,7 +112,7 @@ public class NetworkPanel : Panel
         if (!int.TryParse(hostNumberInput.text, out i)) { DisplayErrorMessage("Please enter a number."); return; }
         if (i <= 0 || i > 254) { DisplayErrorMessage("Host number must be between 1 and 254."); return; }
 
-        EventManager.ConnectBtnClicked.Invoke(i.ToString());
+        GameEvents.ConnectBtnClicked.Invoke(i.ToString());
     }
 
     private void DisplayErrorMessage(string s)

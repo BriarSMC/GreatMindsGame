@@ -55,7 +55,7 @@ public class NamePanel : Panel
         errorMessageGroup.alpha = 0f;
         errorMessageText = errorMessagePanel.Find("ErrorMessageText").GetComponent<TextMeshProUGUI>();
         quitBtn = transform.Find("QuitBtn").GetComponent<Button>();
-        quitBtn.onClick.AddListener(() => EventManager.QuitBtnClicked.Invoke());
+        quitBtn.onClick.AddListener(() => GameEvents.QuitBtnClicked.Invoke());
     }
 
     void Update()
@@ -116,7 +116,7 @@ public class NamePanel : Panel
             return;
         }
 
-        EventManager.PlayerNameSet.Invoke(name);
+        GameEvents.PlayerNameSet.Invoke(name);
     }
 
     private void DisplayError(string msg)
