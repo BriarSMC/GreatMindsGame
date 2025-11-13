@@ -61,6 +61,7 @@ public partial class GameManager : NetworkBehaviour
      * the AddPlayerName() method (RpcMethods.cs) to add players as they connect.
      */
     private Dictionary<ulong, string> players = new Dictionary<ulong, string>();
+    private Dictionary<ulong, string> answers = new Dictionary<ulong, string>();
 
     /*
      * ClientId         Copy of NetworkManager.Singleton.LocalClientId
