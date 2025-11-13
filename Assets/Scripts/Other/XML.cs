@@ -21,12 +21,9 @@ using System.Reflection;
  * Version: 0.1.0
  * Version History
  * ----------------------------------------------------------------------------
-// DELETEME Delete the following line before first rc commit
- * nn.nn.nn dd-mmm-yyyy Comment 
  * 0.1.0    11-Nov-2025 From scratch
  **/
-// namespace XML
-// {
+
 public static class XML
 {
   /*
@@ -71,4 +68,3 @@ public static class XML
     return dict;
   }
 }
-// }

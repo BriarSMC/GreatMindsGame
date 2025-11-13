@@ -33,6 +33,6 @@ public class SplashScreen : Panel
 
     public void LoadNewSceneTimelineSignal()
     {
-        EventManager.SplashScreenFinished.Invoke();
+        GameEvents.SplashScreenFinished.Invoke();
     }
 }

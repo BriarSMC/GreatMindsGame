@@ -29,7 +29,7 @@ using System.Linq;
  * game control. UI sometimes uses Update(), etc. for player input control, formatting, etc.
  *
  * This module defines and registers all the event subscriptions used during game play.
- * EventManager.cs defines all of the events.
+ * GameEvents.cs defines all of the events.
  */
 public partial class GameManager : NetworkBehaviour
 {
@@ -39,13 +39,13 @@ public partial class GameManager : NetworkBehaviour
         /*
          * Register the events this modules handles.
          */
-        EventManager.SplashScreenFinished.AddListener(OnSplashScreenFinished);
-        EventManager.PlayerNameSet.AddListener(OnPlayerNameSet);
-        EventManager.HostBtnClicked.AddListener(OnHostBtnClicked);
-        EventManager.ConnectBtnClicked.AddListener(OnConnectBtnClicked);
-        EventManager.NewPlayerListAvailable.AddListener(OnNewPlayerListAvailable);
+        GameEvents.SplashScreenFinished.AddListener(OnSplashScreenFinished);
+        GameEvents.PlayerNameSet.AddListener(OnPlayerNameSet);
+        GameEvents.HostBtnClicked.AddListener(OnHostBtnClicked);
+        GameEvents.ConnectBtnClicked.AddListener(OnConnectBtnClicked);
+        GameEvents.NewPlayerListAvailable.AddListener(OnNewPlayerListAvailable);
 
-        EventManager.QuitBtnClicked.AddListener(QuitGame);
+        GameEvents.QuitBtnClicked.AddListener(QuitGame);
     }
 
     private void OnSplashScreenFinished()
@@ -131,6 +131,6 @@ public partial class GameManager : NetworkBehaviour
          * Now trigger to update players data wherever needed.
          */
         players = newDictionary.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-        EventManager.UpdateHostsPlayerList.Invoke();
+        GameEvents.UpdateHostsPlayerList.Invoke();
     }
 }

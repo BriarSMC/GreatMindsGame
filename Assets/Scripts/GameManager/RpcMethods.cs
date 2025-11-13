@@ -68,6 +68,6 @@ public partial class GameManager : NetworkBehaviour
 
     Debug.Log($"{this.name}:{MethodBase.GetCurrentMethod().Name}> ");
     if (!IsServer) players = XML.XMLToData(xml);
-    EventManager.UpdateHostsPlayerList.Invoke();
+    GameEvents.UpdateHostsPlayerList.Invoke();
   }
 }
