@@ -62,6 +62,7 @@ public class HostPanel : Panel
     public override void OnPanelEnabled()
     {
         hostNumberText.text = $"Game #{gameManager.OurNodeNumber}";
+        OnUpdateHostsPlayerList();
     }
 
     private void OnStartGameBtnClicked()

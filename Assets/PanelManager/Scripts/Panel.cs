@@ -85,7 +85,6 @@ namespace CoghillClan.PanelManager
 
         public void SetPanelManager(PanelManager panelManager)
         {
-            Debug.Log($"{this.name}:{MethodBase.GetCurrentMethod().Name}> ");
             if (panelManager != null) panelManager = panelManager;
         }
 
@@ -110,7 +109,6 @@ namespace CoghillClan.PanelManager
              * PanelManager will call this method when a panel is added to the
              * managed panels list.
              */
-            Debug.Log($"{this.name}:{MethodBase.GetCurrentMethod().Name}> Parent PanelLoaded()");
         }
 
         public virtual void OnPanelEnabled()
@@ -119,7 +117,6 @@ namespace CoghillClan.PanelManager
              * PanelManager will call this method when a panel is pushed onto
              * the panel stack.
              */
-            Debug.Log($"{this.name}:{MethodBase.GetCurrentMethod().Name}> Parent PanelPushed()");
         }
 
         public virtual void OnPanelDisabled()
@@ -128,7 +125,6 @@ namespace CoghillClan.PanelManager
              * PanelManager will call this method when a panel is popped
              * from the panel stack.
              */
-            Debug.Log($"{this.name}:{MethodBase.GetCurrentMethod().Name}> Parent PanelPopped()");
         }
     } // End of Class Panel
 } // End of Namespace CoghillClan.PanelManager

@@ -7,6 +7,7 @@ using UnityEditor;
 using Unity.Netcode;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 
 /**
  *
@@ -44,64 +45,29 @@ public partial class GameManager : NetworkBehaviour
      * Tell the clients new copy the new data.
      */
 
+    Debug.Log($"{this.name}:{MethodBase.GetCurrentMethod().Name}> ");
     if (!IsServer) return; // Probably redundant since we are declared SendTo.Server, but ...
 
     players.Add(clientId, name);
-    SetNewPlayerListRpc(players);
+    answers.Add(clientId, "");
+    string xml = XML.DataToXML(players);
+    SetNewPlayerListRpc(xml);
   }
-
-  [Rpc(SendTo.ClientsAndHost)]
-  public void SetNewPlayerListRpc(Dictionary<ulong, string> newData)
-  {
-    /*
-     * If we are the server, then just return cuz we maintain the data anyway.
-     * Tell game new data is available
-     */
-    if (IsServer) return;
-    EventManager.NewPlayerListAvailable.Invoke(newData);
-  }
-
-  /*
-  * Host RPCs
-  * There are no host specific RPCs because the host acts as the server too.
-  */
 
   /*
    * Client RPCs
    */
 
+  [Rpc(SendTo.ClientsAndHost)]
+  public void SetNewPlayerListRpc(string xml)
+  {
+    /*
+     * If we are the server, then just return cuz we maintain the data anyway.
+     * Tell game new data is available
+     */
 
-  // [Rpc(SendTo.Server)]
-  // public void SetPlayerNameRpc(ulong clientId, string name)
-  // {
-  //     if (!IsServer) return;
-
-  //     playerData[clientId] = name;
-
-  //     AppendToOutput($"{clientId} name changed to {name}");
-
-  //     Debug.Log($"{this.name}:{MethodBase.GetCurrentMethod().Name}> New Name set from: {clientId}  Name: {name}");
-  //     Debug.Log($"playerData contains:");
-  //     foreach (var kvp in playerData)
-  //     {
-  //         Debug.Log($"ID: {kvp.Key}  Name: {kvp.Value}");
-  //     }
-  // }
-
-  // [Rpc(SendTo.Server)]
-  // public void RequestDictionaryRpc()
-  // {
-  //     string output = "";
-  //     foreach (var kvp in playerData)
-  //     {
-  //         output += $"ID:{kvp.Key} Name:{kvp.Value}\n";
-  //     }
-  //     SendDictionaryRpc(output);
-  // }
-
-  // [Rpc(SendTo.ClientsAndHost)]
-  // public void SendDictionaryRpc(string s)
-  // {
-  //     AppendToOutput(s);
-  // }
+    Debug.Log($"{this.name}:{MethodBase.GetCurrentMethod().Name}> ");
+    if (!IsServer) players = XML.XMLToData(xml);
+    EventManager.UpdateHostsPlayerList.Invoke();
+  }
 }

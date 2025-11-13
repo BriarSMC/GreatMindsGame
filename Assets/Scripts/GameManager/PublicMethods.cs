@@ -10,7 +10,6 @@ using UnityEngine.SceneManagement;
 using Unity.VisualScripting;
 using CoghillClan.PanelManager;
 using System.Collections.Generic;
-using System.Text.Json;
 
 /**
  *
@@ -104,11 +103,6 @@ public partial class GameManager : NetworkBehaviour
      */
 
     string json = "";
-    foreach (Dictionary<ulong, string> d in dict)
-    {
-      json += "{\"key\": " +
-    }
-
 
     return json;
   }

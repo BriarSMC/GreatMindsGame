@@ -61,6 +61,7 @@ public class NetworkPanel : Panel
         errorMessageText = connectionGroup.transform.Find("ErrorMessageText").GetComponent<TextMeshProUGUI>();
         errorMessageText.alpha = 0f;
         connectBtn = connectionGroup.transform.Find("ConnectBtn").GetComponent<Button>();
+
         connectBtn.onClick.AddListener(OnConnectBtnClicked);
     }
 

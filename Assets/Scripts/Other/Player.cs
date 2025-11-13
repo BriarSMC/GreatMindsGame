@@ -42,7 +42,6 @@ public class Player : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        Debug.Log($"{this.name}:{MethodBase.GetCurrentMethod().Name}> Player has spawned");
         gameManager.Player = this;
     }
 }
