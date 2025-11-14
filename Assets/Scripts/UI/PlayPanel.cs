@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Diagnostics.Contracts;
 
 
 /**
@@ -36,11 +37,13 @@ public class PlayPanel : Panel
     TMP_Text headerText;
     TMP_Text gameNumberText;
     TMP_Text playerNameText;
+    CanvasGroup playArea;
     TMP_InputField prefixInput;
     TMP_Text wordText;
     TMP_InputField postfixInput;
     Button clearBtn;
     Button sendBtn;
+    CanvasGroup controlButtons;
     Button startBtn;
     Button quitBtn;
     RectTransform playerListPanel;
@@ -62,11 +65,13 @@ public class PlayPanel : Panel
         gameNumberText = transform.Find("GameNumberText").GetComponent<TextMeshProUGUI>();
         playerNamePrefab = Instantiate(obj).GetComponent<TextMeshProUGUI>();
         playerNameText = transform.Find("PlayerNameText").GetComponent<TextMeshProUGUI>();
+        playArea = transform.Find("PlayArea").GetComponent<CanvasGroup>();
         prefixInput = transform.Find($"PlayArea/PrefixInput").GetComponent<TMP_InputField>();
         wordText = transform.Find($"PlayArea/WordText").GetComponent<TextMeshProUGUI>();
         postfixInput = transform.Find($"PlayArea/PostfixInput").GetComponent<TMP_InputField>();
-        clearBtn = transform.Find($"ButtonArea/ClearBtn").GetComponent<Button>();
-        sendBtn = transform.Find($"ButtonArea/SendBtn").GetComponent<Button>();
+        clearBtn = transform.Find($"PlayArea/ButtonArea/ClearBtn").GetComponent<Button>();
+        sendBtn = transform.Find($"PlayArea/ButtonArea/SendBtn").GetComponent<Button>();
+        controlButtons = transform.Find($"ControlButtons").GetComponent<CanvasGroup>();
         startBtn = transform.Find("ControlButtons/StartBtn").GetComponent<Button>();
         quitBtn = transform.Find("ControlButtons/QuitBtn").GetComponent<Button>();
         playerListPanel = transform.Find("PlayerListPanel").GetComponent<RectTransform>();
@@ -85,8 +90,17 @@ public class PlayPanel : Panel
 
     public override void OnPanelEnabled()
     {
+        /*
+         * Set text areas.
+         * Turn off the play input area.
+         * Turn off control button area if not the host.
+         */
+
         gameNumberText.text = $"Connected to game #{gameManager.ConnectToHostNumber}";
         playerNameText.text = gameManager.PlayerName;
+        playArea.alpha = 0f;
+        controlButtons.alpha = (gameManager.WeAreHost) ? 1f : 0f;
+
     }
 
     public override void OnPanelDisabled()

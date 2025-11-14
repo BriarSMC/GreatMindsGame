@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5403534655109926503}
   - component: {fileID: 6457716183018410589}
   m_Layer: 5
-  m_Name: VerticalSpacer20px
+  m_Name: Spacer20x20
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
