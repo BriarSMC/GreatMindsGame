@@ -30,8 +30,8 @@ public class HostPanel : Panel
      *      The Game Number (Host Node Number)
      *      List of connected players
      *      A START button
-     *
      *  
+     * Host can start a new game only if two or more players are connected.
      */
 
     GameManager gameManager;
@@ -67,6 +67,11 @@ public class HostPanel : Panel
 
     private void OnStartGameBtnClicked()
     {
+        /*
+         * Don't start a game if the host is the only player connected
+         */
+
+        if (gameManager.GetPlayersCount() <= 1) return;
         GameEvents.PlayStarted.Invoke();
     }
 

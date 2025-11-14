@@ -3,6 +3,8 @@ using CoghillClan.PanelManager;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Reflection;
+
 
 /**
  *
@@ -32,21 +34,20 @@ public class PlayPanel : Panel
     TextMeshProUGUI playerNamePrefab;
 
     TMP_Text headerText;
+    TMP_Text gameNumberText;
     TMP_Text playerNameText;
     TMP_InputField prefixInput;
     TMP_Text wordText;
     TMP_InputField postfixInput;
     Button clearBtn;
     Button sendBtn;
+    Button startBtn;
     Button quitBtn;
     RectTransform playerListPanel;
 
     bool IsPlayRunning = false;
 
-    readonly string k_PlayAreaPath = $"{GameManager.k_PanelManagerPath}PlayPanel/PlayArea/";
-    readonly string k_ButtonAreaPath = $"{GameManager.k_PanelManagerPath}PlayPanel/ButtonArea/";
 
-    /* protected override  */
     public override void OnPanelLoaded()
     {
         LoadUIReferences();
@@ -58,6 +59,7 @@ public class PlayPanel : Panel
         gameManager = GameManager.Instance;
         GameObject obj = Resources.Load<GameObject>("Prefabs/ConnectedPlayerText");
         headerText = transform.Find("HeaderText").GetComponent<TextMeshProUGUI>();
+        gameNumberText = transform.Find("GameNumberText").GetComponent<TextMeshProUGUI>();
         playerNamePrefab = Instantiate(obj).GetComponent<TextMeshProUGUI>();
         playerNameText = transform.Find("PlayerNameText").GetComponent<TextMeshProUGUI>();
         prefixInput = transform.Find($"PlayArea/PrefixInput").GetComponent<TMP_InputField>();
@@ -65,18 +67,25 @@ public class PlayPanel : Panel
         postfixInput = transform.Find($"PlayArea/PostfixInput").GetComponent<TMP_InputField>();
         clearBtn = transform.Find($"ButtonArea/ClearBtn").GetComponent<Button>();
         sendBtn = transform.Find($"ButtonArea/SendBtn").GetComponent<Button>();
-        quitBtn = transform.Find("QuitBtn").GetComponent<Button>();
+        startBtn = transform.Find("ControlButtons/StartBtn").GetComponent<Button>();
+        quitBtn = transform.Find("ControlButtons/QuitBtn").GetComponent<Button>();
         playerListPanel = transform.Find("PlayerListPanel").GetComponent<RectTransform>();
     }
 
     private void SetListeners()
     {
+        clearBtn.onClick.AddListener(OnClearBtnClicked);
+        sendBtn.onClick.AddListener(OnSendBtnClicked);
+        startBtn.onClick.AddListener(OnStartBtnClicked);
+        quitBtn.onClick.AddListener(OnQuitBtnClicked);
+
         GameEvents.PlayStarted.AddListener(PlayStartedFired);
         GameEvents.UpdateHostsPlayerList.AddListener(OnUpdateHostsPlayerList);
     }
 
     public override void OnPanelEnabled()
     {
+        gameNumberText.text = $"Connected to game #{gameManager.ConnectToHostNumber}";
         playerNameText.text = gameManager.PlayerName;
     }
 
@@ -87,7 +96,7 @@ public class PlayPanel : Panel
 
     public void PlayStartedFired()
     {
-
+        Debug.Log($"{this.name}:{MethodBase.GetCurrentMethod().Name}> ");
     }
 
     private void OnUpdateHostsPlayerList()
@@ -104,5 +113,33 @@ public class PlayPanel : Panel
             prefab.text = tmp;
             prefab.transform.SetParent(playerListPanel, false);
         }
+    }
+
+    private void OnClearBtnClicked()
+    {
+        /*
+         * Just brute force clear both input fields.
+         * No fancy logic figuring out which one to do.
+         * //FIXME Or...Since we have to set the focus we have to figure out which field for that.
+         */
+
+        prefixInput.text = "";
+        postfixInput.text = "";
+        //FIXME Set focus here
+    }
+
+    private void OnSendBtnClicked()
+    {
+
+    }
+
+    private void OnStartBtnClicked()
+    {
+
+    }
+
+    private void OnQuitBtnClicked()
+    {
+
     }
 }

@@ -77,7 +77,7 @@ public partial class GameManager : NetworkBehaviour
     public string PlayerName;
     public string ConnectionType;
     public string OurIPAddress;
-    public string OurNodeNumber;
+    public string OurNodeNumber; //FIXME Refactor to something reflecting the game or host number
     public string ConnectToHostNumber;
     public bool WeAreHost = false;
     public bool WeArePlayer = false;

@@ -82,9 +82,9 @@ public partial class GameManager : NetworkBehaviour
         ClientType = (int)ClientTypes.host;
         if (!NetworkManager.Singleton.StartHost()) Panic(PanicCode.CouldNotStartHost);
         ClientId = NetworkManager.Singleton.LocalClientId;
-        // AddPlayerRpc(ClientId, PlayerName);
+        ConnectToHostNumber = OurNodeNumber;
 
-        panelManager.Push(GameManager.PanelNames[GameManager.Panels.hostPanel]);
+        panelManager.Push(GameManager.PanelNames[GameManager.Panels.playPanel]);
     }
 
     private void OnConnectBtnClicked(string host)
