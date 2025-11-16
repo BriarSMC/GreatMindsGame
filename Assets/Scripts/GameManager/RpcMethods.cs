@@ -70,4 +70,11 @@ public partial class GameManager : NetworkBehaviour
     if (!IsServer) players = XML.XMLToData(xml);
     GameEvents.UpdateHostsPlayerList.Invoke();
   }
+
+  [Rpc(SendTo.ClientsAndHost)]
+  public void StartNewGameRpc(string word)
+  {
+    WordInPlay = word;
+    GameEvents.BeginPlay.Invoke();
+  }
 }

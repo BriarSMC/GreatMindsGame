@@ -39,7 +39,8 @@ class GameEvents : MonoBehaviour
     // Events
     public static UnityEvent SplashScreenFinished = new UnityEvent();
     public static UnityEvent<string> PlayerNameSet = new UnityEvent<string>();
-    public static UnityEvent PlayStarted = new UnityEvent();
+    public static UnityEvent StartNewGame = new UnityEvent();
+    public static UnityEvent BeginPlay = new UnityEvent();
     public static UnityEvent HostBtnClicked = new UnityEvent();
     public static UnityEvent<string> ConnectBtnClicked = new UnityEvent<string>();
     public static UnityEvent<Dictionary<ulong, string>> NewPlayerListAvailable = new UnityEvent<Dictionary<ulong, string>>();

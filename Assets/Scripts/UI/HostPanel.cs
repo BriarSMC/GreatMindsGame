@@ -72,7 +72,7 @@ public class HostPanel : Panel
          */
 
         if (gameManager.GetPlayersCount() <= 1) return;
-        GameEvents.PlayStarted.Invoke();
+        GameEvents.StartNewGame.Invoke();
     }
 
 

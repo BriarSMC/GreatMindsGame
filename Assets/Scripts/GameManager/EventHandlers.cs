@@ -44,6 +44,7 @@ public partial class GameManager : NetworkBehaviour
         GameEvents.HostBtnClicked.AddListener(OnHostBtnClicked);
         GameEvents.ConnectBtnClicked.AddListener(OnConnectBtnClicked);
         GameEvents.NewPlayerListAvailable.AddListener(OnNewPlayerListAvailable);
+        GameEvents.StartNewGame.AddListener(OnStartNewGame);
 
         GameEvents.QuitBtnClicked.AddListener(QuitGame);
     }
@@ -132,5 +133,16 @@ public partial class GameManager : NetworkBehaviour
          */
         players = newDictionary.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         GameEvents.UpdateHostsPlayerList.Invoke();
+    }
+
+    private void OnStartNewGame()
+    {
+        /*
+         * Get a new word
+         * Tell all the players that play as started
+         */
+
+        string playWord = "FOOBAR"; //FIXME Change to getting a real word later
+        StartNewGameRpc(playWord);
     }
 }

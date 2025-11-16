@@ -82,6 +82,7 @@ public partial class GameManager : NetworkBehaviour
     public bool WeAreHost = false;
     public bool WeArePlayer = false;
     public int ClientType = 0;
+    public string WordInPlay;
 
     public enum ClientTypes { host = 1, player = 2 }
 

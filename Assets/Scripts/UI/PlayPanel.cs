@@ -84,7 +84,7 @@ public class PlayPanel : Panel
         startBtn.onClick.AddListener(OnStartBtnClicked);
         quitBtn.onClick.AddListener(OnQuitBtnClicked);
 
-        GameEvents.PlayStarted.AddListener(PlayStartedFired);
+        GameEvents.BeginPlay.AddListener(OnBeginPlay);
         GameEvents.UpdateHostsPlayerList.AddListener(OnUpdateHostsPlayerList);
     }
 
@@ -96,6 +96,7 @@ public class PlayPanel : Panel
          * Turn off control button area if not the host.
          */
 
+        GameEvents.BeginPlay.AddListener(OnBeginPlay);
         gameNumberText.text = $"Connected to game #{gameManager.ConnectToHostNumber}";
         playerNameText.text = gameManager.PlayerName;
         playArea.alpha = 0f;
@@ -105,12 +106,15 @@ public class PlayPanel : Panel
 
     public override void OnPanelDisabled()
     {
-        GameEvents.PlayStarted.RemoveListener(PlayStartedFired);
+        GameEvents.BeginPlay.RemoveListener(OnBeginPlay);
     }
 
-    public void PlayStartedFired()
+    public void OnBeginPlay()
     {
         Debug.Log($"{this.name}:{MethodBase.GetCurrentMethod().Name}> ");
+
+        wordText.text = gameManager.WordInPlay;
+        playArea.alpha = 1f;
     }
 
     private void OnUpdateHostsPlayerList()
@@ -149,7 +153,11 @@ public class PlayPanel : Panel
 
     private void OnStartBtnClicked()
     {
+        /*
+         * Signal the GameManager that the play button was clicked
+         */
 
+        GameEvents.StartNewGame.Invoke();
     }
 
     private void OnQuitBtnClicked()

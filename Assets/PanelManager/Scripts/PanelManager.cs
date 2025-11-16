@@ -207,6 +207,11 @@ namespace CoghillClan.PanelManager
 
         }
 
+        public Panel GetPanel(string name)
+        {
+            return FindManagedPanel(name);
+        }
+
         /** 
          * Private Methods
          **/
