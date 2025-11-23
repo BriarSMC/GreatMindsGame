@@ -29,6 +29,9 @@ using System.Xml.Serialization;
 
 public partial class GameManager : NetworkBehaviour
 {
+
+  System.Random random = new System.Random();
+
   /**
    * Server RPCs
    **/
@@ -74,7 +77,24 @@ public partial class GameManager : NetworkBehaviour
   [Rpc(SendTo.ClientsAndHost)]
   public void StartNewGameRpc(string word)
   {
-    WordInPlay = word;
+    /*
+     * The word send to us is the format:
+     *    WORD,WORDTYPE
+     *
+     * WORD is the word in play. 
+     * WORDTYPE is one of the following: A, B, E (after, before, either)
+     *
+     * A means we are looking for a word that follows the word in play. 
+     * B means we are looking for a word that precedes the word in play.
+     * E means we are looking for either of them.
+     *
+     * If the word type is E, then we randomly select whether to use A or B.
+     */
+
+    var values = word.Split(",");
+    WordInPlay = values[0];
+    WordType = values[1];
+    if (WordType == "E") WordType = random.Next(2) == 0 ? "A" : "B";
     GameEvents.BeginPlay.Invoke();
   }
 }

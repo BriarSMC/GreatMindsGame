@@ -32,21 +32,21 @@ public class PlayPanel : Panel
      */
 
     GameManager gameManager;
-    TextMeshProUGUI playerNamePrefab;
 
-    TMP_Text headerText;
-    TMP_Text gameNumberText;
-    TMP_Text playerNameText;
-    CanvasGroup playArea;
-    TMP_InputField prefixInput;
-    TMP_Text wordText;
-    TMP_InputField postfixInput;
-    Button clearBtn;
-    Button sendBtn;
-    CanvasGroup controlButtons;
-    Button startBtn;
-    Button quitBtn;
-    RectTransform playerListPanel;
+    [SerializeReference] TextMeshProUGUI playerNamePrefab;
+
+    [SerializeReference] TMP_Text headerText;
+    [SerializeReference] TMP_Text gameNumberText;
+    [SerializeReference] TMP_Text playerNameText;
+    [SerializeReference] CanvasGroup playArea;
+    [SerializeReference] TMP_InputField wordInput;
+    [SerializeReference] TMP_Text rootWordText;
+    [SerializeReference] Button clearBtn;
+    [SerializeReference] Button sendBtn;
+    [SerializeReference] CanvasGroup controlButtons;
+    [SerializeReference] Button startBtn;
+    [SerializeReference] Button quitBtn;
+    [SerializeReference] RectTransform playerListPanel;
 
     bool IsPlayRunning = false;
 
@@ -60,21 +60,20 @@ public class PlayPanel : Panel
     private void LoadUIReferences()
     {
         gameManager = GameManager.Instance;
-        GameObject obj = Resources.Load<GameObject>("Prefabs/ConnectedPlayerText");
-        headerText = transform.Find("HeaderText").GetComponent<TextMeshProUGUI>();
-        gameNumberText = transform.Find("GameNumberText").GetComponent<TextMeshProUGUI>();
-        playerNamePrefab = Instantiate(obj).GetComponent<TextMeshProUGUI>();
-        playerNameText = transform.Find("PlayerNameText").GetComponent<TextMeshProUGUI>();
-        playArea = transform.Find("PlayArea").GetComponent<CanvasGroup>();
-        prefixInput = transform.Find($"PlayArea/PrefixInput").GetComponent<TMP_InputField>();
-        wordText = transform.Find($"PlayArea/WordText").GetComponent<TextMeshProUGUI>();
-        postfixInput = transform.Find($"PlayArea/PostfixInput").GetComponent<TMP_InputField>();
-        clearBtn = transform.Find($"PlayArea/ButtonArea/ClearBtn").GetComponent<Button>();
-        sendBtn = transform.Find($"PlayArea/ButtonArea/SendBtn").GetComponent<Button>();
-        controlButtons = transform.Find($"ControlButtons").GetComponent<CanvasGroup>();
-        startBtn = transform.Find("ControlButtons/StartBtn").GetComponent<Button>();
-        quitBtn = transform.Find("ControlButtons/QuitBtn").GetComponent<Button>();
-        playerListPanel = transform.Find("PlayerListPanel").GetComponent<RectTransform>();
+        // GameObject obj = Resources.Load<GameObject>("Prefabs/ConnectedPlayerText");
+        // headerText = transform.Find("HeaderText").GetComponent<TextMeshProUGUI>();
+        // gameNumberText = transform.Find("GameNumberText").GetComponent<TextMeshProUGUI>();
+        // playerNamePrefab = Instantiate(obj).GetComponent<TextMeshProUGUI>();
+        // playerNameText = transform.Find("PlayerNameText").GetComponent<TextMeshProUGUI>();
+        // playArea = transform.Find("PlayArea").GetComponent<CanvasGroup>();
+        // wordInput = transform.Find($"PlayArea/WordInput").GetComponent<TMP_InputField>();
+        // rootWordText = transform.Find($"PlayArea/RootWordText").GetComponent<TextMeshProUGUI>();
+        // clearBtn = transform.Find($"PlayArea/ButtonArea/ClearBtn").GetComponent<Button>();
+        // sendBtn = transform.Find($"PlayArea/ButtonArea/SendBtn").GetComponent<Button>();
+        // controlButtons = transform.Find($"ControlButtons").GetComponent<CanvasGroup>();
+        // startBtn = transform.Find("ControlButtons/StartBtn").GetComponent<Button>();
+        // quitBtn = transform.Find("ControlButtons/QuitBtn").GetComponent<Button>();
+        // playerListPanel = transform.Find("PlayerListPanel").GetComponent<RectTransform>();
     }
 
     private void SetListeners()
@@ -87,6 +86,8 @@ public class PlayPanel : Panel
         GameEvents.BeginPlay.AddListener(OnBeginPlay);
         GameEvents.UpdateHostsPlayerList.AddListener(OnUpdateHostsPlayerList);
     }
+
+
 
     public override void OnPanelEnabled()
     {
@@ -113,7 +114,7 @@ public class PlayPanel : Panel
     {
         Debug.Log($"{this.name}:{MethodBase.GetCurrentMethod().Name}> ");
 
-        wordText.text = gameManager.WordInPlay;
+        rootWordText.text = gameManager.WordInPlay;
         playArea.alpha = 1f;
     }
 
@@ -141,8 +142,7 @@ public class PlayPanel : Panel
          * //FIXME Or...Since we have to set the focus we have to figure out which field for that.
          */
 
-        prefixInput.text = "";
-        postfixInput.text = "";
+        wordInput.text = "";
         //FIXME Set focus here
     }
 

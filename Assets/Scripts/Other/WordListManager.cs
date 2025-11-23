@@ -94,6 +94,6 @@ public class WordListManager : MonoBehaviour
         // Wrap around to the beginning if necessary.
 
         if (nextWordNdx >= wordEntries.Length) nextWordNdx = 0;
-        return wordEntries[nextWordNdx++];
+        return wordEntries[nextWordNdx++].ToUpper();
     }
 }

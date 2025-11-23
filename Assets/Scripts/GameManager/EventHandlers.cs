@@ -142,7 +142,7 @@ public partial class GameManager : NetworkBehaviour
          * Tell all the players that play as started
          */
 
-        string playWord = "FOOBAR"; //FIXME Change to getting a real word later
+        string playWord = "FOOBAR,B"; //FIXME Change to getting a real word later
         StartNewGameRpc(playWord);
     }
 }

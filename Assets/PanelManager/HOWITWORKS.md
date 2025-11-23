@@ -24,3 +24,22 @@ All Clients wait for the Host player to click the **START** button. The followin
    - Invokes the BeginPlay event. (The PlayPanel subscribes to this event.)
 5. PlayPanel intercepts the event.
    - Display the WordInPlay on the PlayPanel
+   - Turn the PlayArea on so player can see the word.
+   - Enable controls.
+6. Wait for player to enter a word.
+   - Player enters their word.
+   - Player clicks send button
+   - Send button calls SendPlayersWordRpc().
+   - Player blocks until it receives results.
+7. Server receives SendPlayerWordRpc().
+   - Records the player's word.
+   - Decrements the playersRemaining count.
+   - When count hits zero (0), then it invokes the GameEvent.AllWordsSent event.
+8. Host responds to GameEvent.AllWordsSent.
+   - Since the host and the server are the same device, the host is the only instance that will respond to this event. The players data dictionaries should be filled with everyone's answers.
+   - Host calls GameOverRpc() with the results.
+9. Players respond to GameOverRpc()
+   - Player's instance displays the results of the game.
+   - Player's instance waits for the BeginPlay
+   - Host instance give the option to start a new game
+   - If clicked, then it invokes GameEvent.StartNewGame

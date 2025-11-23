@@ -32,7 +32,6 @@ using System.Collections.Generic;
 **/
 public partial class GameManager : NetworkBehaviour
 {
-
     /*
      * This is a partial class. This file has the name of the class, so we use 
      * it to hold all the common elements between the other partial class files.
@@ -73,7 +72,7 @@ public partial class GameManager : NetworkBehaviour
      * WeArePlayer      Used instead of IsClient
      * ClientType       1 = Host, 2 = Player
      */
-    public ulong ClientId;
+    public ulong ClientId = 0;
     public string PlayerName;
     public string ConnectionType;
     public string OurIPAddress;
@@ -83,6 +82,7 @@ public partial class GameManager : NetworkBehaviour
     public bool WeArePlayer = false;
     public int ClientType = 0;
     public string WordInPlay;
+    public string WordType;
 
     public enum ClientTypes { host = 1, player = 2 }
 
