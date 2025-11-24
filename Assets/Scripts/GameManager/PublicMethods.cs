@@ -87,23 +87,20 @@ public partial class GameManager : NetworkBehaviour
     return players.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
   }
 
+  public int GetPlayersCount()
+  {
+    /*
+     * Return number of players
+     */
+
+    return players.Count;
+  }
+
   public void DestroyAllChildren(GameObject obj)
   {
     for (int i = obj.transform.childCount - 1; i >= 0; i--)
     {
       Destroy(obj.transform.GetChild(i).gameObject);
     }
-  }
-
-  public string ConvertPlayersToJSON(Dictionary<ulong, string> dict)
-  {
-    /*
-     * We can't send Dictionary data directly by RPC calls.
-     * Since
-     */
-
-    string json = "";
-
-    return json;
   }
 }

@@ -3,6 +3,9 @@ using CoghillClan.PanelManager;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Reflection;
+using System.Diagnostics.Contracts;
+
 
 /**
  *
@@ -29,65 +32,83 @@ public class PlayPanel : Panel
      */
 
     GameManager gameManager;
-    TextMeshProUGUI playerNamePrefab;
 
-    TMP_Text headerText;
-    TMP_Text playerNameText;
-    TMP_InputField prefixInput;
-    TMP_Text wordText;
-    TMP_InputField postfixInput;
-    Button clearBtn;
-    Button sendBtn;
-    Button quitBtn;
-    RectTransform playerListPanel;
+    [SerializeReference] TextMeshProUGUI playerNamePrefab;
+
+    [SerializeReference] TMP_Text headerText;
+    [SerializeReference] TMP_Text gameNumberText;
+    [SerializeReference] TMP_Text playerNameText;
+    [SerializeReference] CanvasGroup playArea;
+    [SerializeReference] TMP_InputField wordInput;
+    [SerializeReference] TMP_Text rootWordText;
+    [SerializeReference] Button clearBtn;
+    [SerializeReference] Button sendBtn;
+    [SerializeReference] CanvasGroup controlButtons;
+    [SerializeReference] Button startBtn;
+    [SerializeReference] Button quitBtn;
+    [SerializeReference] RectTransform playerListPanel;
 
     bool IsPlayRunning = false;
 
-    readonly string k_PlayAreaPath = $"{GameManager.k_PanelManagerPath}PlayPanel/PlayArea/";
-    readonly string k_ButtonAreaPath = $"{GameManager.k_PanelManagerPath}PlayPanel/ButtonArea/";
+    private const string k_WordTypeBefore = "B";
+    private const string k_WordTypeAfter = "A";
 
-    /* protected override  */
     public override void OnPanelLoaded()
     {
-        LoadUIReferences();
-        SetListeners();
-    }
-
-    private void LoadUIReferences()
-    {
         gameManager = GameManager.Instance;
-        GameObject obj = Resources.Load<GameObject>("Prefabs/ConnectedPlayerText");
-        headerText = transform.Find("HeaderText").GetComponent<TextMeshProUGUI>();
-        playerNamePrefab = Instantiate(obj).GetComponent<TextMeshProUGUI>();
-        playerNameText = transform.Find("PlayerNameText").GetComponent<TextMeshProUGUI>();
-        prefixInput = transform.Find($"PlayArea/PrefixInput").GetComponent<TMP_InputField>();
-        wordText = transform.Find($"PlayArea/WordText").GetComponent<TextMeshProUGUI>();
-        postfixInput = transform.Find($"PlayArea/PostfixInput").GetComponent<TMP_InputField>();
-        clearBtn = transform.Find($"ButtonArea/ClearBtn").GetComponent<Button>();
-        sendBtn = transform.Find($"ButtonArea/SendBtn").GetComponent<Button>();
-        quitBtn = transform.Find("QuitBtn").GetComponent<Button>();
-        playerListPanel = transform.Find("PlayerListPanel").GetComponent<RectTransform>();
+        SetListeners();
     }
 
     private void SetListeners()
     {
-        GameEvents.PlayStarted.AddListener(PlayStartedFired);
+        clearBtn.onClick.AddListener(OnClearBtnClicked);
+        sendBtn.onClick.AddListener(OnSendBtnClicked);
+        startBtn.onClick.AddListener(OnStartBtnClicked);
+        quitBtn.onClick.AddListener(OnQuitBtnClicked);
+
+        GameEvents.BeginPlay.AddListener(OnBeginPlay);
         GameEvents.UpdateHostsPlayerList.AddListener(OnUpdateHostsPlayerList);
     }
 
+
+
     public override void OnPanelEnabled()
     {
+        /*
+         * Set text areas.
+         * Turn off the play input area.
+         * Turn off control button area if not the host.
+         */
+
+        GameEvents.BeginPlay.AddListener(OnBeginPlay);
+        gameNumberText.text = $"Connected to game #{gameManager.ConnectToHostNumber}";
         playerNameText.text = gameManager.PlayerName;
+        playArea.alpha = 0f;
+        controlButtons.alpha = (gameManager.WeAreHost) ? 1f : 0f;
+
     }
 
     public override void OnPanelDisabled()
     {
-        GameEvents.PlayStarted.RemoveListener(PlayStartedFired);
+        GameEvents.BeginPlay.RemoveListener(OnBeginPlay);
     }
 
-    public void PlayStartedFired()
+    public void OnBeginPlay()
     {
+        /*
+         * Display the word on the screen.
+         * Arrange the word-text and the input-field according to GameManager.WordType
+         */
 
+        Debug.Log($"{this.name}:{MethodBase.GetCurrentMethod().Name}> ");
+
+        rootWordText.text = gameManager.WordInPlay;
+        switch (gameManager.WordType)
+        {
+            case k_WordTypeBefore: wordInput.transform.SetSiblingIndex(0); break;
+            case k_WordTypeAfter: rootWordText.transform.SetSiblingIndex(0); break;
+        }
+        playArea.alpha = 1f;
     }
 
     private void OnUpdateHostsPlayerList()
@@ -104,5 +125,35 @@ public class PlayPanel : Panel
             prefab.text = tmp;
             prefab.transform.SetParent(playerListPanel, false);
         }
+    }
+
+    private void OnClearBtnClicked()
+    {
+        /*
+         * Just clear the input field
+         * //FIXME Reset focus
+         */
+
+        wordInput.text = "";
+        //FIXME Set focus here
+    }
+
+    private void OnSendBtnClicked()
+    {
+
+    }
+
+    private void OnStartBtnClicked()
+    {
+        /*
+         * Signal the GameManager that the play button was clicked
+         */
+
+        GameEvents.StartNewGame.Invoke();
+    }
+
+    private void OnQuitBtnClicked()
+    {
+
     }
 }
