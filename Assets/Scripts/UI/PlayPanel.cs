@@ -50,30 +50,13 @@ public class PlayPanel : Panel
 
     bool IsPlayRunning = false;
 
+    private const string k_WordTypeBefore = "B";
+    private const string k_WordTypeAfter = "A";
 
     public override void OnPanelLoaded()
     {
-        LoadUIReferences();
-        SetListeners();
-    }
-
-    private void LoadUIReferences()
-    {
         gameManager = GameManager.Instance;
-        // GameObject obj = Resources.Load<GameObject>("Prefabs/ConnectedPlayerText");
-        // headerText = transform.Find("HeaderText").GetComponent<TextMeshProUGUI>();
-        // gameNumberText = transform.Find("GameNumberText").GetComponent<TextMeshProUGUI>();
-        // playerNamePrefab = Instantiate(obj).GetComponent<TextMeshProUGUI>();
-        // playerNameText = transform.Find("PlayerNameText").GetComponent<TextMeshProUGUI>();
-        // playArea = transform.Find("PlayArea").GetComponent<CanvasGroup>();
-        // wordInput = transform.Find($"PlayArea/WordInput").GetComponent<TMP_InputField>();
-        // rootWordText = transform.Find($"PlayArea/RootWordText").GetComponent<TextMeshProUGUI>();
-        // clearBtn = transform.Find($"PlayArea/ButtonArea/ClearBtn").GetComponent<Button>();
-        // sendBtn = transform.Find($"PlayArea/ButtonArea/SendBtn").GetComponent<Button>();
-        // controlButtons = transform.Find($"ControlButtons").GetComponent<CanvasGroup>();
-        // startBtn = transform.Find("ControlButtons/StartBtn").GetComponent<Button>();
-        // quitBtn = transform.Find("ControlButtons/QuitBtn").GetComponent<Button>();
-        // playerListPanel = transform.Find("PlayerListPanel").GetComponent<RectTransform>();
+        SetListeners();
     }
 
     private void SetListeners()
@@ -112,9 +95,19 @@ public class PlayPanel : Panel
 
     public void OnBeginPlay()
     {
+        /*
+         * Display the word on the screen.
+         * Arrange the word-text and the input-field according to GameManager.WordType
+         */
+
         Debug.Log($"{this.name}:{MethodBase.GetCurrentMethod().Name}> ");
 
         rootWordText.text = gameManager.WordInPlay;
+        switch (gameManager.WordType)
+        {
+            case k_WordTypeBefore: wordInput.transform.SetSiblingIndex(0); break;
+            case k_WordTypeAfter: rootWordText.transform.SetSiblingIndex(0); break;
+        }
         playArea.alpha = 1f;
     }
 
@@ -137,9 +130,8 @@ public class PlayPanel : Panel
     private void OnClearBtnClicked()
     {
         /*
-         * Just brute force clear both input fields.
-         * No fancy logic figuring out which one to do.
-         * //FIXME Or...Since we have to set the focus we have to figure out which field for that.
+         * Just clear the input field
+         * //FIXME Reset focus
          */
 
         wordInput.text = "";

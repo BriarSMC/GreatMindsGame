@@ -142,5 +142,4 @@ public partial class GameManager : NetworkBehaviour
     public const int k_GamePortNumber = 7777;
 
     public const string k_PanelManagerPath = "/UIManager/Canvas/PanelManager/";
-
 }
