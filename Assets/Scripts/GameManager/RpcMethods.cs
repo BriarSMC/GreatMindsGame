@@ -48,7 +48,6 @@ public partial class GameManager : NetworkBehaviour
      * Tell the clients new copy the new data.
      */
 
-    Debug.Log($"{this.name}:{MethodBase.GetCurrentMethod().Name}> ");
     if (!IsServer) return; // Probably redundant since we are declared SendTo.Server, but ...
 
     players.Add(clientId, name);
@@ -57,8 +56,23 @@ public partial class GameManager : NetworkBehaviour
     SetNewPlayerListRpc(xml);
   }
 
+  [Rpc(SendTo.Server)]
+  public void SendPlayersWordRpc(ulong clientId, string word)
+  {
+    /*
+     * Record the player's word in the answers dictionary
+     * If all players have send a word, then signal that we have all of them.
+     * This signal will send the answers dictionary to the players and
+     * indicate the end of the round.
+     */
+
+    answers.Add(clientId, word);
+
+    if (answers.Count == players.Count) GameEvents.ReceivedAllPlayersWords.Invoke();
+  }
+
   /*
-   * Client RPCs
+   * Client/Host RPCs
    */
 
   [Rpc(SendTo.ClientsAndHost)]
@@ -69,7 +83,6 @@ public partial class GameManager : NetworkBehaviour
      * Tell game new data is available
      */
 
-    Debug.Log($"{this.name}:{MethodBase.GetCurrentMethod().Name}> ");
     if (!IsServer) players = XML.XMLToData(xml);
     GameEvents.UpdateHostsPlayerList.Invoke();
   }
@@ -96,5 +109,20 @@ public partial class GameManager : NetworkBehaviour
     WordType = values[1];
     if (WordType == "E") WordType = random.Next(2) == 0 ? "A" : "B";
     GameEvents.BeginPlay.Invoke();
+  }
+
+  [Rpc(SendTo.ClientsAndHost)]
+  public void SendResultsToPlayersRpc(string xml)
+  {
+    /*
+     * Server calls this when all players have sent an answer.
+     * This also indicates to the players that the round is over.
+     *
+     * xml is an XML representation of the answers dictionary.
+     * We decode it and store it in our copy of the answers dictionary.
+     */
+
+    answers = XML.XMLToData(xml);
+    GameEvents.GameOver.Invoke();
   }
 }

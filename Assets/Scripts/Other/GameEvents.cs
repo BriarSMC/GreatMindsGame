@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using Unity.Networking.Transport.Error;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -46,6 +47,8 @@ class GameEvents : MonoBehaviour
     public static UnityEvent<Dictionary<ulong, string>> NewPlayerListAvailable = new UnityEvent<Dictionary<ulong, string>>();
     public static UnityEvent UpdateHostsPlayerList = new UnityEvent();
     public static UnityEvent QuitBtnClicked = new UnityEvent();
+    public static UnityEvent ReceivedAllPlayersWords = new UnityEvent();
+    public static UnityEvent GameOver = new UnityEvent();
 
 
     private void Awake()

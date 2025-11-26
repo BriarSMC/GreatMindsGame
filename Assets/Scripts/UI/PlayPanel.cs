@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Diagnostics.Contracts;
+using System;
+using Unity.Collections;
 
 
 /**
@@ -68,6 +70,7 @@ public class PlayPanel : Panel
 
         GameEvents.BeginPlay.AddListener(OnBeginPlay);
         GameEvents.UpdateHostsPlayerList.AddListener(OnUpdateHostsPlayerList);
+        GameEvents.GameOver.AddListener(OnGameOver);
     }
 
 
@@ -100,7 +103,6 @@ public class PlayPanel : Panel
          * Arrange the word-text and the input-field according to GameManager.WordType
          */
 
-        Debug.Log($"{this.name}:{MethodBase.GetCurrentMethod().Name}> ");
 
         rootWordText.text = gameManager.WordInPlay;
         switch (gameManager.WordType)
@@ -116,7 +118,7 @@ public class PlayPanel : Panel
         /*
          * Update the players list in the HostPanel
          */
-        gameManager.DestroyAllChildren(playerListPanel.gameObject); //transform.Find("PlayerListPanel").gameObject);
+        gameManager.DestroyAllChildren(playerListPanel.gameObject);
 
         foreach (KeyValuePair<ulong, string> kvp in gameManager.GetPlayers())
         {
@@ -125,6 +127,24 @@ public class PlayPanel : Panel
             prefab.text = tmp;
             prefab.transform.SetParent(playerListPanel, false);
         }
+    }
+
+    private void OnGameOver()
+    {
+        /*
+         * Update the results list in the host panel
+         */
+
+        gameManager.DestroyAllChildren(playerListPanel.gameObject);
+
+        foreach (KeyValuePair<ulong, string> kvp in gameManager.GetPlayers())
+        {
+            string tmp = $"{kvp.Value} ({kvp.Key} Word: {gameManager.GetAnswers()[kvp.Key]})";
+            TextMeshProUGUI prefab = Instantiate(playerNamePrefab);
+            prefab.text = tmp;
+            prefab.transform.SetParent(playerListPanel, false);
+        }
+
     }
 
     private void OnClearBtnClicked()
@@ -140,7 +160,14 @@ public class PlayPanel : Panel
 
     private void OnSendBtnClicked()
     {
+        /*
+         * Ignore if input field is blank.
+         * Send the word to the server
+         */
 
+        if (String.IsNullOrEmpty(wordInput.text)) return;
+
+        gameManager.SendPlayersWordRpc(gameManager.ClientId, wordInput.text.ToUpper());
     }
 
     private void OnStartBtnClicked()
