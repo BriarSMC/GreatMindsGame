@@ -45,6 +45,9 @@ public partial class GameManager : NetworkBehaviour
         GameEvents.ConnectBtnClicked.AddListener(OnConnectBtnClicked);
         GameEvents.NewPlayerListAvailable.AddListener(OnNewPlayerListAvailable);
         GameEvents.StartNewGame.AddListener(OnStartNewGame);
+        GameEvents.ReceivedAllPlayersWords.AddListener(OnReceivedAllPlayersWords);
+        GameEvents.GameOver.AddListener(OnGameOver);
+
 
         GameEvents.QuitBtnClicked.AddListener(QuitGame);
     }
@@ -117,8 +120,6 @@ public partial class GameManager : NetworkBehaviour
         ConnectToHostNumber = host;
 
         if (!NetworkManager.Singleton.StartClient()) Panic(PanicCode.CouldNotStartClient);
-        ClientId = NetworkManager.Singleton.LocalClientId;
-
 
         panelManager.Push(GameManager.PanelNames[GameManager.Panels.playPanel]);
     }
@@ -138,11 +139,29 @@ public partial class GameManager : NetworkBehaviour
     private void OnStartNewGame()
     {
         /*
+         * Clear the players answers
          * Get a new word
          * Tell all the players that play as started
          */
 
+        answers.Clear();
         string playWord = "FOOBAR,A"; //FIXME Change to getting a real word later
         StartNewGameRpc(playWord);
+    }
+
+    private void OnReceivedAllPlayersWords()
+    {
+        /*
+         * Round is over. 
+         * We need to convert the answers dictionary to XML and send the XML to the players.
+         * Each player will display the resulting answers and end the round.
+         */
+
+        SendResultsToPlayersRpc(XML.DataToXML(answers));
+    }
+
+    private void OnGameOver()
+    {
+
     }
 }

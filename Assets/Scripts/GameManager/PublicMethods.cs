@@ -53,6 +53,7 @@ public partial class GameManager : NetworkBehaviour
      */
     if (clientId != NetworkManager.Singleton.LocalClientId) return; // Only continue if it's the client
 
+    ClientId = clientId;
     AddPlayerRpc(clientId, PlayerName);
   }
 
@@ -94,6 +95,16 @@ public partial class GameManager : NetworkBehaviour
      */
 
     return players.Count;
+  }
+
+  public Dictionary<ulong, string> GetAnswers()
+  {
+    return answers.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+  }
+
+  public int GetAnswersCount()
+  {
+    return answers.Count;
   }
 
   public void DestroyAllChildren(GameObject obj)
