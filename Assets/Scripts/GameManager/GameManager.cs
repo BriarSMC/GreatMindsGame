@@ -22,13 +22,14 @@ using System.Collections.Generic;
  * 
  * https://www.github.com/BriarSMC/GreatMindsGame.git
  *
- * Version: 0.1.0
+ * Version: 0.2.0
  * Version History
  * ----------------------------------------------------------------------------
  * 0.1.0    28-Oct-2025 Cloned from GreatMinds-RPC-Test
  *          28-Oct-2025 Refactored Awake and Start out of GameManager.cs
  *          28-Oct-2025 Refactored public methods out of GameManager.cs
  *          28-Oct-2025 Refactored RPC methods out of GameManager.cs
+ * 0.2.0    26-Nov-2025 Refactor RPC out of GameManager.cs
 **/
 public partial class GameManager : NetworkBehaviour
 {
@@ -51,6 +52,7 @@ public partial class GameManager : NetworkBehaviour
     public Player Player;
     public NetworkManager networkManager;
     public PanelManager panelManager;
+    private RPC rpc;
 
     // Public Properties
 

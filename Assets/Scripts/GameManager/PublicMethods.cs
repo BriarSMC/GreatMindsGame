@@ -54,7 +54,12 @@ public partial class GameManager : NetworkBehaviour
     if (clientId != NetworkManager.Singleton.LocalClientId) return; // Only continue if it's the client
 
     ClientId = clientId;
-    AddPlayerRpc(clientId, PlayerName);
+    rpc.AddPlayerRpc(clientId, PlayerName);
+  }
+
+  public RPC GetRPC()
+  {
+    return rpc;
   }
 
   public void Panic(PanicCode code)
@@ -88,6 +93,25 @@ public partial class GameManager : NetworkBehaviour
     return players.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
   }
 
+  public void SetPlayers(Dictionary<ulong, string> players)
+  {
+    /*
+     * Set the players dictionary to the parameter
+     */
+
+    this.players = players;
+  }
+
+  public void AddPlayer(ulong clientId, string name)
+  {
+    /*
+     * Add player to players dictionary if not null or blank
+     */
+
+    if (string.IsNullOrEmpty(name)) return;
+    players.Add(clientId, name);
+  }
+
   public int GetPlayersCount()
   {
     /*
@@ -100,6 +124,23 @@ public partial class GameManager : NetworkBehaviour
   public Dictionary<ulong, string> GetAnswers()
   {
     return answers.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+  }
+
+  public void SetAnswers(Dictionary<ulong, string> answers)
+  {
+    /*
+     * Set the answers dictionary to the parameter
+     */
+
+    this.answers = answers;
+  }
+
+  public void AddAnswer(ulong clientId, string answer)
+  {
+    /*
+     * Add answer to answers dictionary (nulls and blanks allowed)
+     */
+    answers.Add(clientId, answer);
   }
 
   public int GetAnswersCount()

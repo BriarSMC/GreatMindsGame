@@ -54,6 +54,7 @@ public partial class GameManager : NetworkBehaviour
      */
     panelManager = FindFirstObjectByType<PanelManager>();
     networkManager = FindFirstObjectByType<NetworkManager>();
+    rpc = GetComponent<RPC>();
     if (panelManager == null) Panic(PanicCode.NoNetworkManagerFound);
     if (networkManager == null) Panic(PanicCode.NoNetworkManagerFound);
   }

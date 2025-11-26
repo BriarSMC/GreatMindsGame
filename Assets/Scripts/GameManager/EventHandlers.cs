@@ -146,7 +146,7 @@ public partial class GameManager : NetworkBehaviour
 
         answers.Clear();
         string playWord = "FOOBAR,A"; //FIXME Change to getting a real word later
-        StartNewGameRpc(playWord);
+        rpc.StartNewGameRpc(playWord);
     }
 
     private void OnReceivedAllPlayersWords()
@@ -157,7 +157,7 @@ public partial class GameManager : NetworkBehaviour
          * Each player will display the resulting answers and end the round.
          */
 
-        SendResultsToPlayersRpc(XML.DataToXML(answers));
+        rpc.SendResultsToPlayersRpc(XML.DataToXML(answers));
     }
 
     private void OnGameOver()

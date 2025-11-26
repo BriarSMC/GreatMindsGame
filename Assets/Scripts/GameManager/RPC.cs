@@ -21,14 +21,16 @@ using System.Xml.Serialization;
  * 
  * https://www.github.com/BriarSMC/GreatMindsGame.git
  *
- * Version: 0.1.0
+ * Version: 0.2.0
  * Version History
  * ----------------------------------------------------------------------------
  * 0.1.0    28-Oct-2025 Refactored RPC methods out of GameManager.cs
+ * 0.2.0    26-Nov-2025 Refactor RPC methods into its own class
  **/
 
-public partial class GameManager : NetworkBehaviour
+public class RPC : NetworkBehaviour
 {
+  [SerializeReference] GameManager gameManager;
 
   System.Random random = new System.Random();
 
@@ -48,11 +50,11 @@ public partial class GameManager : NetworkBehaviour
      * Tell the clients new copy the new data.
      */
 
-    if (!IsServer) return; // Probably redundant since we are declared SendTo.Server, but ...
+    if (!gameManager.IsServer) return; // Probably redundant since we are declared SendTo.Server, but ...
 
-    players.Add(clientId, name);
-    answers.Add(clientId, "");
-    string xml = XML.DataToXML(players);
+    gameManager.AddPlayer(clientId, name);
+    gameManager.AddAnswer(clientId, "");
+    string xml = XML.DataToXML(gameManager.GetPlayers());
     SetNewPlayerListRpc(xml);
   }
 
@@ -66,9 +68,9 @@ public partial class GameManager : NetworkBehaviour
      * indicate the end of the round.
      */
 
-    answers.Add(clientId, word);
+    gameManager.AddAnswer(clientId, word);
 
-    if (answers.Count == players.Count) GameEvents.ReceivedAllPlayersWords.Invoke();
+    if (gameManager.GetAnswersCount() == gameManager.GetPlayersCount()) GameEvents.ReceivedAllPlayersWords.Invoke();
   }
 
   /*
@@ -83,7 +85,7 @@ public partial class GameManager : NetworkBehaviour
      * Tell game new data is available
      */
 
-    if (!IsServer) players = XML.XMLToData(xml);
+    if (!gameManager.IsServer) gameManager.SetPlayers(XML.XMLToData(xml));
     GameEvents.UpdateHostsPlayerList.Invoke();
   }
 
@@ -105,9 +107,9 @@ public partial class GameManager : NetworkBehaviour
      */
 
     var values = word.Split(",");
-    WordInPlay = values[0];
-    WordType = values[1];
-    if (WordType == "E") WordType = random.Next(2) == 0 ? "A" : "B";
+    gameManager.WordInPlay = values[0];
+    gameManager.WordType = values[1];
+    if (gameManager.WordType == "E") gameManager.WordType = random.Next(2) == 0 ? "A" : "B";
     GameEvents.BeginPlay.Invoke();
   }
 
@@ -122,7 +124,7 @@ public partial class GameManager : NetworkBehaviour
      * We decode it and store it in our copy of the answers dictionary.
      */
 
-    answers = XML.XMLToData(xml);
+    gameManager.SetAnswers(XML.XMLToData(xml));
     GameEvents.GameOver.Invoke();
   }
 }

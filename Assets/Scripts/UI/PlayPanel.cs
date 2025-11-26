@@ -34,6 +34,7 @@ public class PlayPanel : Panel
      */
 
     GameManager gameManager;
+    RPC rpc;
 
     [SerializeReference] TextMeshProUGUI playerNamePrefab;
 
@@ -58,6 +59,7 @@ public class PlayPanel : Panel
     public override void OnPanelLoaded()
     {
         gameManager = GameManager.Instance;
+        rpc = gameManager.GetRPC();
         SetListeners();
     }
 
@@ -167,7 +169,7 @@ public class PlayPanel : Panel
 
         if (String.IsNullOrEmpty(wordInput.text)) return;
 
-        gameManager.SendPlayersWordRpc(gameManager.ClientId, wordInput.text.ToUpper());
+        rpc.SendPlayersWordRpc(gameManager.ClientId, wordInput.text.ToUpper());
     }
 
     private void OnStartBtnClicked()
